@@ -1,0 +1,10 @@
+.navbar__button{
+    height: 100%;
+    width: 200px;
+    background: white;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    border-bottom: white;
+    border-top: white;
+    font-size: 18px;
+}
