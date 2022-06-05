@@ -7,4 +7,9 @@
     border-bottom: white;
     border-top: white;
     font-size: 18px;
+    display: inline-block;
+}
+.link{
+    text-decoration: none;
+    height: 100%;
 }

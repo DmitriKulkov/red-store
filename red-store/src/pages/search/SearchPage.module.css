@@ -10,3 +10,46 @@
     flex-direction: column;
     align-items: center;
 }
+
+.search__bar{
+    width: 700px;
+}
+
+.filters{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
+.filters__panel{
+    background-color:white;
+    margin:20px auto 0 auto;
+    width: 1000px;
+    position: absolute;
+    height: 152px;
+    left: 492px;
+    top: 263px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.collection{
+    width: 100%;
+    padding: 0 calc((100% - 1400px)/2) 50px calc((100% - 1400px)/2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filters__price_interval{
+    height: 21px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.filters__price_interval_input{
+    height: 21px;
+    width: 100px;
+    margin: 0 5px 0 5px;
+}

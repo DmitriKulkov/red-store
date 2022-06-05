@@ -27,7 +27,7 @@
 }
 .collection{
     width: 100%;
-    padding: 0 calc((100% - 1500px)/2) 50px calc((100% - 1500px)/2);
+    padding: 0 calc((100% - 1400px)/2) 50px calc((100% - 1400px)/2);
     display: flex;
     flex-direction: column;
     align-items: center;

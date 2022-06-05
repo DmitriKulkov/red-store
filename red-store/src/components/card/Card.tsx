@@ -1,23 +1,23 @@
 import React, {FC} from 'react';
 import {Link} from 'react-router-dom';
+import {Product} from "../../entities/product.entity";
+import classes from "./Card.module.css";
+
 
 interface CardProps{
-    img_ref: string;
-    name: string;
-    cost: number;
-    page: string;
+    item: Product;
 }
 
-const Card:FC<CardProps> = ({img_ref, name, cost, page}) => {
+const Card:FC<CardProps> = ({ item}) => {
     return (
-        <div>
-            <Link to={page}>
+        <div className={classes.card}>
+            <Link to={'/product/' + item.model.slug} className={classes.link}>
                 <div>
-                    <img src={img_ref} alt="item"/>
+                    <img src={item.files[0].encoded_img} alt="item"/>
                 </div>
                 <div>
-                    <h1>{name}</h1>
-                    <h1>{cost}</h1>
+                    <h1>{item.model.name}</h1>
+                    <h1>{item.price}</h1>
                 </div>
             </Link>
         </div>

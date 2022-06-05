@@ -1,9 +1,10 @@
 import React from 'react'
 import classes from "./Navbar.module.css"
 import NavbarButton from "./navbarButton/NavbarButton";
-import Search from "../search/Search";
+import Search from "../search-bar/Search";
 import LoginButton from "./loginButton/LoginButton";
-import logo from "./i01_Background.png"
+import logo from "./logo.png"
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
 
@@ -11,18 +12,22 @@ const Navbar = () => {
         <header className={classes.navbar}>
             <div className={classes.headbar}>
                 <img src={logo} className={classes.logo} alt='logo'/>
-                <h1 className={classes.headbar__h1}>RedShop</h1>
+                <Link to={'/home'} className={classes.headbar__link}>
+                    <h1 className={classes.headbar__h1}>RedShop</h1>
+                </Link>
             </div>
             <nav className={classes.buttonbar}>
-                <div style={{marginLeft: 'auto', marginRight: 'auto', height: '100%', display: 'flex'}}>
-                    <div style={{display: 'inline-block', height: '100%', marginLeft: '250px'}}>
-                        <NavbarButton>New!</NavbarButton>
-                        <NavbarButton>Clothes</NavbarButton>
-                        <NavbarButton>Shoes</NavbarButton>
-                        <NavbarButton>Collections</NavbarButton>
+                <div className={classes.buttons__container}>
+                    <div className={classes.buttons}>
+                        <NavbarButton link={'/search'}>New!</NavbarButton>
+                        <NavbarButton link={'/search'}>Clothes</NavbarButton>
+                        <NavbarButton link={'/search'}>Shoes</NavbarButton>
+                        <NavbarButton link={'/search'}>Collections</NavbarButton>
                     </div>
-                    <Search/>
-                    <div style={{marginLeft:'80px', height: '100%', display: 'flex', alignItems:'center'}}>
+                    <div className={classes.search__container}>
+                        <Search/>
+                    </div>
+                    <div className={classes.login_buttons__container}>
                             <LoginButton>Log in</LoginButton>
                             <LoginButton>Sign in</LoginButton>
                     </div>

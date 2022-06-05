@@ -1,0 +1,4 @@
+.colors__container{
+    display: flex;
+    flex-direction: row;
+}
