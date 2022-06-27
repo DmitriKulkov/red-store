@@ -19,13 +19,14 @@ import {
     changePriceDiapason,
     changeSortPrice
 } from "../../filters/action-creators/filters";
+import {useDebouncedCallback} from "use-debounce";
 
 const SearchPage:FC = () => {
     const limit = 8
 
     const {filters} = useTypedSelector(filters => filters)
     const [search, setSearch] = useState<string>('');
-    const [totalCount, setTotalCount] = useState(0)
+    // const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(0)
     const [items, setItems] = useState<Product[]>([])
     const [inputDiapason, setInputDiapason] = useState<{a:string, b:string}>({a:"0", b:"0"})
@@ -35,14 +36,17 @@ const SearchPage:FC = () => {
     const [colors, setColors] = useState<Color[]>([])
     const [collections, setCollections] = useState<Collection[]>([])
 
-    const fetchItems = async (limit: number, page: number) => {
-        const response = await ItemsService.getAllItems(limit, page, filters)
-        setItems([...items, ...response.data])
-    }
+    const debouncedPriceA = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
+    const debouncedPriceB = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
 
-    const fetchFilteredItems = async (limit: number, page: number) => {
+    const fetchItems = async (limit: number, page: number, reset:boolean = false) => {
         const response = await ItemsService.getAllItems(limit, page, filters)
-        setItems([...response.data])
+        if(reset) {
+            setPage(0)
+            setItems([...response.data])
+        }else {
+            setItems([...items, ...response.data])
+        }
     }
 
     const fetchProperties = async () => {
@@ -56,9 +60,6 @@ const SearchPage:FC = () => {
         fetchItems(limit, page)
         fetchProperties()
     },[])
-
-    // const debounceFetchFilters = debounce(fetchFilteredItems, 2000)
-    const debounceFetchFilters = debounce((value: string)=>{console.log(value) }, 2000)
 
     return (
         <div className={classes.search}>
@@ -77,7 +78,7 @@ const SearchPage:FC = () => {
                                         onChange={(sortPrice)=> {
                                             changeSortPrice(sortPrice)(dispatch)
                                             setSelectSort(sortPrice)
-                                            fetchFilteredItems(limit, page)
+                                            fetchItems(limit, page, true)
                                             console.log(filters.sortPrice)
                                         }}
                                         options={[
@@ -94,12 +95,14 @@ const SearchPage:FC = () => {
                                         type="text"
                                         value={inputDiapason.a}
                                         onChange={(e)=> {
-                                            changePriceDiapason({
-                                                a: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.a:parseInt(e.target.value, 10),
-                                                b: filters.priceDiapason.b
-                                            })(dispatch)
                                             setInputDiapason({...inputDiapason, a: e.target.value})
-                                            debounceFetchFilters(inputDiapason.a)
+                                            debouncedPriceA(()=> {
+                                              changePriceDiapason({
+                                                a: isNaN(parseInt(e.target.value, 10)) ? filters.priceDiapason.a : parseInt(e.target.value, 10),
+                                                b: filters.priceDiapason.b
+                                              })(dispatch)
+                                              fetchItems(limit, page, true)
+                                            })
                                         }}
                                     />
                                     <p>to: </p>
@@ -108,14 +111,14 @@ const SearchPage:FC = () => {
                                         type="text"
                                         value={inputDiapason.b}
                                         onChange={(e)=> {
-                                            console.log(e.target.value)
-                                            changePriceDiapason({
-                                                a: filters.priceDiapason.a,
-                                                b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b:parseInt(e.target.value, 10)
-                                            })(dispatch)
                                             setInputDiapason({...inputDiapason, b: e.target.value})
-                                            console.log(inputDiapason)
-                                            console.log(filters.priceDiapason)
+                                            debouncedPriceB(()=>{
+                                                changePriceDiapason({
+                                                  a: filters.priceDiapason.a,
+                                                  b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b:parseInt(e.target.value, 10)
+                                                })(dispatch)
+                                                fetchItems(limit, page, true)
+                                            })
                                         }}
                                     />
                                 </div>
@@ -131,7 +134,7 @@ const SearchPage:FC = () => {
                                     colors={colors}
                                     onClick={(color)=> {
                                         changeColors(color)(dispatch)
-                                        fetchFilteredItems(limit, page)
+                                        fetchItems(limit, page, true)
                                         console.log(filters.cColors)
                                     }}/>
                             </div>
@@ -144,7 +147,7 @@ const SearchPage:FC = () => {
                                              style={{cursor: "pointer"}}
                                              onClick={()=>{
                                                  changeCollection(col.slug)(dispatch)
-                                                 fetchFilteredItems(limit, page)
+                                                 fetchItems(limit, page, true)
                                              }}
                                         >
                                             {col.name}
