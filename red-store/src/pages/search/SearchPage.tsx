@@ -25,7 +25,7 @@ const SearchPage:FC = () => {
     const limit = 8
 
     const {filters} = useTypedSelector(filters => filters)
-    const [search, setSearch] = useState<string>('');
+    const [search, setSearch] = useState<string>('')
     // const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(0)
     const [items, setItems] = useState<Product[]>([])
@@ -97,11 +97,11 @@ const SearchPage:FC = () => {
                                         onChange={(e)=> {
                                             setInputDiapason({...inputDiapason, a: e.target.value})
                                             debouncedPriceA(()=> {
-                                              changePriceDiapason({
-                                                a: isNaN(parseInt(e.target.value, 10)) ? filters.priceDiapason.a : parseInt(e.target.value, 10),
-                                                b: filters.priceDiapason.b
-                                              })(dispatch)
-                                              fetchItems(limit, page, true)
+                                                changePriceDiapason({
+                                                    a: isNaN(parseInt(e.target.value, 10)) ? filters.priceDiapason.a : parseInt(e.target.value, 10),
+                                                    b: filters.priceDiapason.b
+                                                })(dispatch)
+                                                fetchItems(limit, page, true)
                                             })
                                         }}
                                     />
@@ -123,7 +123,7 @@ const SearchPage:FC = () => {
                                     />
                                 </div>
                         </Dropdown>
-                        <Dropdown header="Category"  >
+                        <Dropdown header="Category">
                             <div>For Men</div>
                             <div>For Women</div>
                         </Dropdown>
