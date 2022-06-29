@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {actionType, SetFilterAction} from "../reducers/filterReducers";
 
 
-export const changeSortPrice = (sortPrice: string) => {
+export const changeSortPrice = (sortPrice: number) => {
     return (dispatch: Dispatch<SetFilterAction>) => {
         dispatch({type: actionType.SET_SORT_PRICE, sortPrice: sortPrice})
     }

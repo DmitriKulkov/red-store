@@ -13,7 +13,7 @@ export type SetFilterAction = SetSortPriceAction | SetPriceDiapasonAction | SetC
 
 export interface SetSortPriceAction {
     type: actionType.SET_SORT_PRICE;
-    sortPrice: string;
+    sortPrice: number;
 }
 export interface SetPriceDiapasonAction {
     type: actionType.SET_PRICE_DIAPASON;
@@ -37,7 +37,7 @@ export interface RemoveFiltersAction {
 }
 
 export interface FilterState {
-    sortPrice: string;
+    sortPrice: number;
     priceDiapason: {a: number, b: number};
     collection?: string;
     gender?: string;
@@ -45,7 +45,7 @@ export interface FilterState {
 }
 
 export const initialState: FilterState = {
-    sortPrice: "1",
+    sortPrice: 1,
     priceDiapason: {a: 0, b:10000},
     // gender: "",
     cColors: []

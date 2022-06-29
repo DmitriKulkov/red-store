@@ -8,17 +8,34 @@ interface DropdownProps{
 
 const Dropdown:FC<DropdownProps> = ({header, children}) => {
     const [isActive, setIsActive] = useState<boolean>(false)
+    let timer: NodeJS.Timeout
     return (
         <div className={classes.dropdown}>
             <DropdownButton
-                onClick={()=>setIsActive(!isActive)}
+                onMouseEnter={()=> {
+                    setIsActive(true)
+                }}
+                onMouseLeave={()=> {
+                    timer = setTimeout(()=> {
+                        setIsActive(false)
+                    }, 100)
+                }}
             >
                 {header}
             </DropdownButton>
             {
-                isActive && (<div className={classes.dropdown__content}>
-                    {children}
-                </div>)
+                isActive && (
+                    <div className={classes.dropdown__content}
+                         onMouseEnter={()=> {
+                             clearTimeout(timer)
+                         }}
+                         onMouseLeave={()=> {
+                             setTimeout(()=>setIsActive(false), 100)
+                         }}
+                    >
+                        {children}
+                    </div>
+                )
             }
         </div>
     );

@@ -20,6 +20,7 @@ import {
     changeSortPrice
 } from "../../filters/action-creators/filters";
 import {useDebouncedCallback} from "use-debounce";
+import {Checkbox} from "@mui/material";
 
 const SearchPage:FC = () => {
     const limit = 8
@@ -30,7 +31,7 @@ const SearchPage:FC = () => {
     const [page, setPage] = useState(0)
     const [items, setItems] = useState<Product[]>([])
     const [inputDiapason, setInputDiapason] = useState<{a:string, b:string}>({a:"0", b:"0"})
-    const [selectSort, setSelectSort] = useState<string>("")
+    const [selectSort, setSelectSort] = useState<1|-1>(1)
     const dispatch = useDispatch()
 
     const [colors, setColors] = useState<Color[]>([])
@@ -70,58 +71,83 @@ const SearchPage:FC = () => {
                     </div>
                     <div className={classes.filters}>
                         <Dropdown header="Cost">
-                                <p>Sort by:</p>
-                                <div>
-                                    <Select
-                                        value={selectSort}
-                                        defaultValue="Select Price Sort"
-                                        onChange={(sortPrice)=> {
-                                            changeSortPrice(sortPrice)(dispatch)
-                                            setSelectSort(sortPrice)
+                            <p>Sort by:</p>
+                            <div className={classes.checkbox_container}>
+                                <Checkbox
+                                    checked={selectSort === 1}
+                                    onClick={
+                                        () => {
+                                            changeSortPrice(1)(dispatch)
+                                            setSelectSort(1)
                                             fetchItems(limit, page, true)
-                                            console.log(filters.sortPrice)
-                                        }}
-                                        options={[
-                                            {value: 1, name: "price increase"},
-                                            {value: -1, name: "price decrease"},
-                                        ]}
-                                    />
-                                </div>
-                                <p>Price interval:</p>
-                                <div className={classes.filters__price_interval}>
-                                    <p>from: </p>
-                                    <input
-                                        className={classes.filters__price_interval_input}
-                                        type="text"
-                                        value={inputDiapason.a}
-                                        onChange={(e)=> {
-                                            setInputDiapason({...inputDiapason, a: e.target.value})
-                                            debouncedPriceA(()=> {
-                                                changePriceDiapason({
-                                                    a: isNaN(parseInt(e.target.value, 10)) ? filters.priceDiapason.a : parseInt(e.target.value, 10),
-                                                    b: filters.priceDiapason.b
-                                                })(dispatch)
+                                        }
+                                    }
+                                />
+                                price increase
+                            </div>
+                            <div className={classes.checkbox_container}>
+                                <Checkbox
+                                    checked={selectSort === -1}
+                                    onClick={
+                                        ()=> {
+                                                changeSortPrice(-1)(dispatch)
+                                                setSelectSort(-1)
                                                 fetchItems(limit, page, true)
-                                            })
-                                        }}
-                                    />
-                                    <p>to: </p>
-                                    <input
-                                        className={classes.filters__price_interval_input}
-                                        type="text"
-                                        value={inputDiapason.b}
-                                        onChange={(e)=> {
-                                            setInputDiapason({...inputDiapason, b: e.target.value})
-                                            debouncedPriceB(()=>{
-                                                changePriceDiapason({
-                                                  a: filters.priceDiapason.a,
-                                                  b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b:parseInt(e.target.value, 10)
-                                                })(dispatch)
-                                                fetchItems(limit, page, true)
-                                            })
-                                        }}
-                                    />
-                                </div>
+                                        }
+                                    }
+                                />
+                                price decrease
+                            </div>
+                            {/*        <Select*/}
+                            {/*            value={selectSort}*/}
+                            {/*            defaultValue="Select Price Sort"*/}
+                            {/*            onChange={(sortPrice)=> {*/}
+                            {/*                changeSortPrice(sortPrice)(dispatch)*/}
+                            {/*                setSelectSort(sortPrice)*/}
+                            {/*                fetchItems(limit, page, true)*/}
+                            {/*                console.log(filters.sortPrice)*/}
+                            {/*                console.log(sortPrice)*/}
+                            {/*            }}*/}
+                            {/*            options={[*/}
+                            {/*            {value: 1, name: "price increase"},*/}
+                            {/*                {value: -1, name: "price decrease"},*/}
+                            {/*            ]}*/}
+                            {/*        />*/}
+                            <p>Price interval:</p>
+                            <div className={classes.filters__price_interval}>
+                                <p>from: </p>
+                                <input
+                                    className={classes.filters__price_interval_input}
+                                    type="text"
+                                    value={inputDiapason.a}
+                                    onChange={(e)=> {
+                                        setInputDiapason({...inputDiapason, a: e.target.value})
+                                        debouncedPriceA(()=> {
+                                            changePriceDiapason({
+                                                a: isNaN(parseInt(e.target.value, 10)) ? filters.priceDiapason.a : parseInt(e.target.value, 10),
+                                                b: filters.priceDiapason.b
+                                            })(dispatch)
+                                            fetchItems(limit, page, true)
+                                        })
+                                    }}
+                                />
+                                <p>to: </p>
+                                <input
+                                    className={classes.filters__price_interval_input}
+                                    type="text"
+                                    value={inputDiapason.b}
+                                    onChange={(e)=> {
+                                        setInputDiapason({...inputDiapason, b: e.target.value})
+                                        debouncedPriceB(()=>{
+                                            changePriceDiapason({
+                                              a: filters.priceDiapason.a,
+                                              b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b:parseInt(e.target.value, 10)
+                                            })(dispatch)
+                                            fetchItems(limit, page, true)
+                                        })
+                                    }}
+                                />
+                            </div>
                         </Dropdown>
                         <Dropdown header="Category">
                             <div>For Men</div>
@@ -129,7 +155,7 @@ const SearchPage:FC = () => {
                         </Dropdown>
                         <Dropdown header="Color">
                             <div >
-                                <div>Colors:</div>
+                                <p>Colors:</p>
                                 <ColorList
                                     colors={colors}
                                     onClick={(color)=> {
