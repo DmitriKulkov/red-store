@@ -1,41 +1,32 @@
 import React, {FC, useEffect, useState} from 'react';
 import classes from './SearchPage.module.css'
-import Search from "../../components/search-bar/Search";
 import Dropdown from "../../components/dropdown/Dropdown";
 import CardList from "../../components/card-list/CardList";
 import {Product} from "../../entities/product.entity";
 import ItemsService from "../../API/ItemsService";
-import Select from "../../components/select/Select";
 import ColorsService from "../../API/ColorsService";
 import {Color} from "../../entities/color.entity";
 import {Collection} from "../../entities/collection.entity";
 import {CollectionsService} from "../../API/CollectionsService";
 import ColorList from "../../components/color-list/ColorList";
-import {useDispatch, useSelector} from "react-redux";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {
-    changeCollection,
-    changeColors,
-    changePriceDiapason,
-    changeSortPrice
-} from "../../filters/action-creators/filters";
 import {useDebouncedCallback} from "use-debounce";
-import {Checkbox} from "@mui/material";
+import {Checkbox, IconButton} from "@mui/material";
+import {useActions} from "../../hooks/useActions";
+import {Clear} from "@mui/icons-material"
 
 const SearchPage:FC = () => {
     const limit = 8
 
     const {filters} = useTypedSelector(filters => filters)
-    const [search, setSearch] = useState<string>('')
     // const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(0)
     const [items, setItems] = useState<Product[]>([])
-    const [inputDiapason, setInputDiapason] = useState<{a:string, b:string}>({a:"0", b:"0"})
-    const [selectSort, setSelectSort] = useState<1|-1>(1)
-    const dispatch = useDispatch()
 
     const [colors, setColors] = useState<Color[]>([])
     const [collections, setCollections] = useState<Collection[]>([])
+
+    const {changePriceDiapason, changeSortPrice, changeColors, changeCollection, removeFilters} = useActions()
 
     const debouncedPriceA = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
     const debouncedPriceB = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
@@ -62,24 +53,33 @@ const SearchPage:FC = () => {
         fetchProperties()
     },[])
 
+    useEffect(()=>{
+        fetchItems(limit, page, true)
+    },[filters])
+
     return (
         <div className={classes.search}>
             <div>
                 <div className={classes.search__headbar}>
-                    <div className={classes.search__bar}>
-                        <Search value={search} onChange={(value:string)=>setSearch(value)}/>
+                    <div className={classes.filters__label_container}>
+                        <label className={classes.filters__label}>{(filters.name == undefined || filters.name == "")?"Filters":"Search: " + filters.name}</label>
+                        <IconButton
+                            aria-label="delete"
+                            onClick={()=>{
+                                removeFilters()
+                            }}>
+                            <Clear />
+                        </IconButton>
                     </div>
                     <div className={classes.filters}>
                         <Dropdown header="Cost">
                             <p>Sort by:</p>
                             <div className={classes.checkbox_container}>
                                 <Checkbox
-                                    checked={selectSort === 1}
+                                    checked={filters.sortPrice === 1}
                                     onClick={
                                         () => {
-                                            changeSortPrice(1)(dispatch)
-                                            setSelectSort(1)
-                                            fetchItems(limit, page, true)
+                                            changeSortPrice(1)
                                         }
                                     }
                                 />
@@ -87,47 +87,28 @@ const SearchPage:FC = () => {
                             </div>
                             <div className={classes.checkbox_container}>
                                 <Checkbox
-                                    checked={selectSort === -1}
+                                    checked={filters.sortPrice === -1}
                                     onClick={
                                         ()=> {
-                                                changeSortPrice(-1)(dispatch)
-                                                setSelectSort(-1)
-                                                fetchItems(limit, page, true)
+                                                changeSortPrice(-1)
                                         }
                                     }
                                 />
                                 price decrease
                             </div>
-                            {/*        <Select*/}
-                            {/*            value={selectSort}*/}
-                            {/*            defaultValue="Select Price Sort"*/}
-                            {/*            onChange={(sortPrice)=> {*/}
-                            {/*                changeSortPrice(sortPrice)(dispatch)*/}
-                            {/*                setSelectSort(sortPrice)*/}
-                            {/*                fetchItems(limit, page, true)*/}
-                            {/*                console.log(filters.sortPrice)*/}
-                            {/*                console.log(sortPrice)*/}
-                            {/*            }}*/}
-                            {/*            options={[*/}
-                            {/*            {value: 1, name: "price increase"},*/}
-                            {/*                {value: -1, name: "price decrease"},*/}
-                            {/*            ]}*/}
-                            {/*        />*/}
                             <p>Price interval:</p>
                             <div className={classes.filters__price_interval}>
                                 <p>from: </p>
                                 <input
                                     className={classes.filters__price_interval_input}
                                     type="text"
-                                    value={inputDiapason.a}
+                                    value={filters.priceDiapason.a}
                                     onChange={(e)=> {
-                                        setInputDiapason({...inputDiapason, a: e.target.value})
                                         debouncedPriceA(()=> {
                                             changePriceDiapason({
                                                 a: isNaN(parseInt(e.target.value, 10)) ? filters.priceDiapason.a : parseInt(e.target.value, 10),
                                                 b: filters.priceDiapason.b
-                                            })(dispatch)
-                                            fetchItems(limit, page, true)
+                                            })
                                         })
                                     }}
                                 />
@@ -135,15 +116,13 @@ const SearchPage:FC = () => {
                                 <input
                                     className={classes.filters__price_interval_input}
                                     type="text"
-                                    value={inputDiapason.b}
+                                    value={filters.priceDiapason.b}
                                     onChange={(e)=> {
-                                        setInputDiapason({...inputDiapason, b: e.target.value})
                                         debouncedPriceB(()=>{
                                             changePriceDiapason({
                                               a: filters.priceDiapason.a,
-                                              b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b:parseInt(e.target.value, 10)
-                                            })(dispatch)
-                                            fetchItems(limit, page, true)
+                                              b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b : parseInt(e.target.value, 10)
+                                            })
                                         })
                                     }}
                                 />
@@ -159,8 +138,7 @@ const SearchPage:FC = () => {
                                 <ColorList
                                     colors={colors}
                                     onClick={(color)=> {
-                                        changeColors(color)(dispatch)
-                                        fetchItems(limit, page, true)
+                                        changeColors(color)
                                         console.log(filters.cColors)
                                     }}/>
                             </div>
@@ -172,8 +150,7 @@ const SearchPage:FC = () => {
                                         <div key={col.id}
                                              style={{cursor: "pointer"}}
                                              onClick={()=>{
-                                                 changeCollection(col.slug)(dispatch)
-                                                 fetchItems(limit, page, true)
+                                                 changeCollection(col.slug)
                                              }}
                                         >
                                             {col.name}

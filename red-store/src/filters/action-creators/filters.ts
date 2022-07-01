@@ -29,6 +29,12 @@ export const changeColors = (color: string) => {
     }
 }
 
+export const changeName = (name: string) => {
+    return (dispatch: Dispatch<SetFilterAction>) => {
+        dispatch({type: actionType.SET_NAME, name: name})
+    }
+}
+
 export const removeFilters = () => {
     return(dispatch: Dispatch<SetFilterAction>)=> {
         dispatch({type: actionType.REMOVE_FILTERS})

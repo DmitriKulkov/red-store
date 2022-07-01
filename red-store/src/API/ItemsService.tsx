@@ -11,7 +11,7 @@ export default class ItemsService{
             params:{
                 _limit: limit,
                 _page: page,
-                _name: '',
+                _name: filters.name,
                 _sortPrice: filters.sortPrice,
                 _priceFloor: filters.priceDiapason.a,
                 _priceTop: filters.priceDiapason.b,

@@ -1,4 +1,3 @@
-import {Color} from "../../entities/color.entity";
 
 export enum actionType {
     SET_SORT_PRICE = "SET_SORT_PRICE",
@@ -7,9 +6,16 @@ export enum actionType {
     SET_GENDER = "SET_GENDER",
     SET_COLORS = "SET_COLORS",
     REMOVE_FILTERS = "REMOVE_FILTERS",
+    SET_NAME = "SET_NAME",
 }
 
-export type SetFilterAction = SetSortPriceAction | SetPriceDiapasonAction | SetCollectionAction | SetGenderAction | SetColorAction | RemoveFiltersAction
+export type SetFilterAction = SetSortPriceAction |
+    SetPriceDiapasonAction |
+    SetCollectionAction |
+    SetGenderAction |
+    SetColorAction |
+    SetNameAction |
+    RemoveFiltersAction
 
 export interface SetSortPriceAction {
     type: actionType.SET_SORT_PRICE;
@@ -32,6 +38,11 @@ export interface SetColorAction {
     color: string;
 }
 
+export interface SetNameAction {
+    type: actionType.SET_NAME;
+    name: string;
+}
+
 export interface RemoveFiltersAction {
     type: actionType.REMOVE_FILTERS;
 }
@@ -42,35 +53,41 @@ export interface FilterState {
     collection?: string;
     gender?: string;
     cColors: string[];
+    name?: string;
 }
 
 export const initialState: FilterState = {
     sortPrice: 1,
     priceDiapason: {a: 0, b:10000},
-    // gender: "",
-    cColors: []
+    cColors: [],
 }
 
 export const filterReducer= (state = initialState, action: SetFilterAction): FilterState => {
     switch (action.type) {
         case actionType.SET_SORT_PRICE:
-            state.sortPrice = action.sortPrice
+            state = {...state, sortPrice: action.sortPrice}
             return state
         case actionType.SET_PRICE_DIAPASON:
-            state.priceDiapason = action.priceDiapason
+            state = {...state, priceDiapason: action.priceDiapason}
             return state
         case actionType.SET_COLLECTION:
-            state.collection = action.collection
+            state = {...state, collection: action.collection}
             return state
         case actionType.SET_GENDER:
-            state.gender = action.gender
+            state = {...state, gender: action.gender}
             return state
         case actionType.SET_COLORS:
             !state.cColors.includes(action.color)
-                ? state.cColors = state.cColors.concat(action.color)
-                : state.cColors = state.cColors.filter(function (ccol) {
-                    return ccol !== action.color
-                })
+                ? state = {...state, cColors: state.cColors.concat(action.color)}
+                : state = {
+                    ...state,
+                    cColors: state.cColors.filter(function (ccol) {
+                        return ccol !== action.color
+                    })
+                }
+            return state
+        case actionType.SET_NAME:
+            state = {...state, name: action.name}
             return state
         case actionType.REMOVE_FILTERS:
             state = initialState
