@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import classes from './SearchPage.module.css'
 import Dropdown from "../../components/dropdown/Dropdown";
 import CardList from "../../components/card-list/CardList";
@@ -14,13 +14,18 @@ import {useDebouncedCallback} from "use-debounce";
 import {Checkbox, IconButton} from "@mui/material";
 import {useActions} from "../../hooks/useActions";
 import {Clear} from "@mui/icons-material"
+import {getPagesCount} from "../../components/utils/pages";
+import {useObserver} from "../../hooks/useObserver";
+import {useFetching} from "../../hooks/useFetching";
+import Loader from "../../components/UI/loader/Loader";
+
 
 const SearchPage:FC = () => {
-    const limit = 8
+    const limit = 2
 
     const {filters} = useTypedSelector(filters => filters)
-    // const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(0)
     const [items, setItems] = useState<Product[]>([])
 
     const [colors, setColors] = useState<Color[]>([])
@@ -28,18 +33,23 @@ const SearchPage:FC = () => {
 
     const {changePriceDiapason, changeSortPrice, changeColors, changeCollection, removeFilters} = useActions()
 
+    const lastElement = useRef() as React.MutableRefObject<HTMLDivElement>;
+
     const debouncedPriceA = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
     const debouncedPriceB = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
 
-    const fetchItems = async (limit: number, page: number, reset:boolean = false) => {
+    const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (limit: number, page: number, reset:boolean = false) => {
         const response = await ItemsService.getAllItems(limit, page, filters)
+        const totalCount = parseInt(response.headers['x-total-count'])
         if(reset) {
             setPage(0)
             setItems([...response.data])
         }else {
             setItems([...items, ...response.data])
+            setTotalPages(getPagesCount(totalCount, limit))
         }
-    }
+    })
+
 
     const fetchProperties = async () => {
         const col = await ColorsService.getAll()
@@ -49,13 +59,20 @@ const SearchPage:FC = () => {
     }
 
     useEffect(()=>{
-        fetchItems(limit, page)
         fetchProperties()
     },[])
 
     useEffect(()=>{
+        fetchItems(limit, page)
+    }, [page])
+
+    useEffect(()=>{
         fetchItems(limit, page, true)
     },[filters])
+
+    useObserver(lastElement, page < totalPages, isItemsLoading,()=>{
+        setPage(page+1)
+    })
 
     return (
         <div className={classes.search}>
@@ -166,6 +183,13 @@ const SearchPage:FC = () => {
             <div className={classes.collection}>
                 <CardList products={items}/>
             </div>
+            {isItemsLoading
+                ?<div>
+                    <Loader/>
+                </div>
+                :null
+            }
+            <div ref={lastElement} className={classes.loader}/>
         </div>
     );
 };
