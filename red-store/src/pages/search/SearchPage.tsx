@@ -21,12 +21,15 @@ import Loader from "../../components/UI/loader/Loader";
 
 
 const SearchPage:FC = () => {
-    const limit = 2
+    const limit = 8
 
     const {filters} = useTypedSelector(filters => filters)
-    const [page, setPage] = useState(0)
-    const [totalPages, setTotalPages] = useState(0)
+    const [page, setPage] = useState<number>(0)
+    const [totalPages, setTotalPages] = useState<number>(0)
     const [items, setItems] = useState<Product[]>([])
+    const [diapason, setDiapason] = useState<{a:number, b:number}>({a:0, b:10000})
+
+
 
     const [colors, setColors] = useState<Color[]>([])
     const [collections, setCollections] = useState<Collection[]>([])
@@ -38,16 +41,15 @@ const SearchPage:FC = () => {
     const debouncedPriceA = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
     const debouncedPriceB = useDebouncedCallback(<T extends Function>(callback:T)=>{callback()}, 1000)
 
-    const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (limit: number, page: number, reset:boolean = false) => {
+    const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (limit: number, page: number) => {
         const response = await ItemsService.getAllItems(limit, page, filters)
         const totalCount = parseInt(response.headers['x-total-count'])
-        if(reset) {
-            setPage(0)
+        if(page === 0) {
             setItems([...response.data])
-        }else {
+        }else{
             setItems([...items, ...response.data])
-            setTotalPages(getPagesCount(totalCount, limit))
         }
+        setTotalPages(getPagesCount(totalCount, limit))
     })
 
 
@@ -63,15 +65,13 @@ const SearchPage:FC = () => {
     },[])
 
     useEffect(()=>{
+        setPage(0)
         fetchItems(limit, page)
-    }, [page])
-
-    useEffect(()=>{
-        fetchItems(limit, page, true)
     },[filters])
 
     useObserver(lastElement, page < totalPages, isItemsLoading,()=>{
         setPage(page+1)
+        fetchItems(limit, page)
     })
 
     return (
@@ -79,7 +79,7 @@ const SearchPage:FC = () => {
             <div>
                 <div className={classes.search__headbar}>
                     <div className={classes.filters__label_container}>
-                        <label className={classes.filters__label}>{(filters.name == undefined || filters.name == "")?"Filters":"Search: " + filters.name}</label>
+                        <label className={classes.filters__label}>{(filters.name === undefined || filters.name === "")?"Filters":"Search: " + filters.name}</label>
                         <IconButton
                             aria-label="delete"
                             onClick={()=>{
@@ -107,7 +107,7 @@ const SearchPage:FC = () => {
                                     checked={filters.sortPrice === -1}
                                     onClick={
                                         ()=> {
-                                                changeSortPrice(-1)
+                                            changeSortPrice(-1)
                                         }
                                     }
                                 />
@@ -117,9 +117,9 @@ const SearchPage:FC = () => {
                             <div className={classes.filters__price_interval}>
                                 <p>from: </p>
                                 <input
+                                    value={diapason.a}
                                     className={classes.filters__price_interval_input}
                                     type="text"
-                                    value={filters.priceDiapason.a}
                                     onChange={(e)=> {
                                         debouncedPriceA(()=> {
                                             changePriceDiapason({
@@ -127,19 +127,27 @@ const SearchPage:FC = () => {
                                                 b: filters.priceDiapason.b
                                             })
                                         })
+                                        setDiapason({
+                                            a: isNaN(parseInt(e.target.value, 10)) ? diapason.a : parseInt(e.target.value, 10),
+                                            b: diapason.b
+                                        })
                                     }}
                                 />
                                 <p>to: </p>
                                 <input
+                                    value={diapason.b}
                                     className={classes.filters__price_interval_input}
                                     type="text"
-                                    value={filters.priceDiapason.b}
                                     onChange={(e)=> {
                                         debouncedPriceB(()=>{
                                             changePriceDiapason({
-                                              a: filters.priceDiapason.a,
-                                              b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b : parseInt(e.target.value, 10)
+                                                a: filters.priceDiapason.a,
+                                                b: isNaN(parseInt(e.target.value, 10))?filters.priceDiapason.b : parseInt(e.target.value, 10)
                                             })
+                                        })
+                                        setDiapason({
+                                            a: diapason.a,
+                                            b: isNaN(parseInt(e.target.value, 10)) ? diapason.b : parseInt(e.target.value, 10)
                                         })
                                     }}
                                 />
