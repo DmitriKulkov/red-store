@@ -27,7 +27,7 @@ const SearchPage:FC = () => {
     const [page, setPage] = useState<number>(0)
     const [totalPages, setTotalPages] = useState<number>(0)
     const [items, setItems] = useState<Product[]>([])
-    const [diapason, setDiapason] = useState<{a:number, b:number}>({a:0, b:10000})
+    const [diapason, setDiapason] = useState<{a:string, b:string}>({a:'0', b:'10000'})
 
 
 
@@ -45,7 +45,7 @@ const SearchPage:FC = () => {
         const response = await ItemsService.getAllItems(limit, page, filters)
         const totalCount = parseInt(response.headers['x-total-count'])
         if(page === 0) {
-            setItems([...response.data])
+            setItems(response.data)
         }else{
             setItems([...items, ...response.data])
         }
@@ -128,7 +128,7 @@ const SearchPage:FC = () => {
                                             })
                                         })
                                         setDiapason({
-                                            a: isNaN(parseInt(e.target.value, 10)) ? diapason.a : parseInt(e.target.value, 10),
+                                            a: e.target.value,
                                             b: diapason.b
                                         })
                                     }}
@@ -147,7 +147,7 @@ const SearchPage:FC = () => {
                                         })
                                         setDiapason({
                                             a: diapason.a,
-                                            b: isNaN(parseInt(e.target.value, 10)) ? diapason.b : parseInt(e.target.value, 10)
+                                            b: e.target.value
                                         })
                                     }}
                                 />

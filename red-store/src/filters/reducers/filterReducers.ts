@@ -7,6 +7,7 @@ export enum actionType {
     SET_COLORS = "SET_COLORS",
     REMOVE_FILTERS = "REMOVE_FILTERS",
     SET_NAME = "SET_NAME",
+    SET_CATEGORY = "SET_CATEGORY",
 }
 
 export type SetFilterAction = SetSortPriceAction |
@@ -15,6 +16,7 @@ export type SetFilterAction = SetSortPriceAction |
     SetGenderAction |
     SetColorAction |
     SetNameAction |
+    SetCategoryAction |
     RemoveFiltersAction
 
 export interface SetSortPriceAction {
@@ -43,6 +45,11 @@ export interface SetNameAction {
     name: string;
 }
 
+export interface SetCategoryAction {
+    type: actionType.SET_CATEGORY;
+    category: string;
+}
+
 export interface RemoveFiltersAction {
     type: actionType.REMOVE_FILTERS;
 }
@@ -54,6 +61,7 @@ export interface FilterState {
     gender?: string;
     cColors: string[];
     name?: string;
+    category?: string;
 }
 
 export const initialState: FilterState = {
@@ -88,6 +96,9 @@ export const filterReducer= (state = initialState, action: SetFilterAction): Fil
             return state
         case actionType.SET_NAME:
             state = {...state, name: action.name}
+            return state
+        case actionType.SET_CATEGORY:
+            state = {...state, category: action.category}
             return state
         case actionType.REMOVE_FILTERS:
             state = initialState

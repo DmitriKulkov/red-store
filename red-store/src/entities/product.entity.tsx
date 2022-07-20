@@ -1,3 +1,6 @@
+import {Model} from "./model.entity";
+import {Color} from "./color.entity";
+
 export interface Product{
     id: number,
     price: string,
@@ -9,18 +12,8 @@ export interface Product{
         starts_at: string,
         ends_at: string
     }|null,
-    model: {
-        id: number,
-        name: string,
-        slug: string,
-        description: string,
-        released: boolean
-    },
-    color: {
-        id: number,
-        name: string,
-        hex: string
-    },
+    model: Model,
+    color: Color,
     files: {
         id: number,
         name: string,

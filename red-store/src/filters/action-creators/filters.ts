@@ -35,6 +35,12 @@ export const changeName = (name: string) => {
     }
 }
 
+export const changeCategory = (category: string) => {
+    return (dispatch: Dispatch<SetFilterAction>) => {
+        dispatch({type: actionType.SET_CATEGORY, category: category})
+    }
+}
+
 export const removeFilters = () => {
     return(dispatch: Dispatch<SetFilterAction>)=> {
         dispatch({type: actionType.REMOVE_FILTERS})
