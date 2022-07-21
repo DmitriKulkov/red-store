@@ -9,9 +9,8 @@
 }
 
 .link > img{
-    --height: 400px;
-    height: var(--height);
-    width: calc(var(--height)/4*3);
+    height: 400px;
+    aspect-ratio: 3/4;
 }
 
 

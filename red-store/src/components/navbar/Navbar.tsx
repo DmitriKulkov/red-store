@@ -1,4 +1,4 @@
-import React, {FormEvent, FormEventHandler, MouseEventHandler, useState} from 'react'
+import React, {useState} from 'react'
 import classes from "./Navbar.module.css"
 import NavbarButton from "./navbarButton/NavbarButton";
 import Search from "../search-bar/Search";
@@ -7,13 +7,14 @@ import logo from "./logo.png"
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {changeName} from "../../filters/action-creators/filters";
+import {useActions} from "../../hooks/useActions";
 
 const Navbar = () => {
     const [search, setSearch] = useState('')
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {filters} = useTypedSelector(filters => filters)
+    const filters = useTypedSelector(state => state.filters)
+    const {changeName, changeTitle} = useActions()
     return (
         <header className={classes.navbar}>
             <div className={classes.headbar}>
@@ -37,12 +38,15 @@ const Navbar = () => {
                             onSubmit={(e)=> {
                                 e.preventDefault()
                                 navigate('/search')
-                                changeName(search)(dispatch)
+                                changeName(search)
+                                changeTitle("Search: " + search)
+                                console.log(search)
                             }}
                             onClick={(e)=> {
                                 e.preventDefault()
                                 navigate('/search')
-                                changeName(search)(dispatch)
+                                changeName(search)
+                                changeTitle("Search: " + search)
                             }}
                         />
                     </div>

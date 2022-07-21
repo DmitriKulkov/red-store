@@ -18,12 +18,15 @@ import {getPagesCount} from "../../components/utils/pages";
 import {useObserver} from "../../hooks/useObserver";
 import {useFetching} from "../../hooks/useFetching";
 import Loader from "../../components/UI/loader/Loader";
+import {Category} from "../../entities/category.entity";
+import {CategoryService} from "../../API/CategoryService";
 
 
 const SearchPage:FC = () => {
     const limit = 8
 
-    const {filters} = useTypedSelector(filters => filters)
+    const filters = useTypedSelector(state => state.filters)
+    const title = useTypedSelector(state => state.title)
     const [page, setPage] = useState<number>(0)
     const [totalPages, setTotalPages] = useState<number>(0)
     const [items, setItems] = useState<Product[]>([])
@@ -33,8 +36,9 @@ const SearchPage:FC = () => {
 
     const [colors, setColors] = useState<Color[]>([])
     const [collections, setCollections] = useState<Collection[]>([])
+    const [categories, setCategories] = useState<Category[]>([])
 
-    const {changePriceDiapason, changeSortPrice, changeColors, changeCollection, removeFilters} = useActions()
+    const {changePriceDiapason, changeSortPrice, changeColors, changeCollection, changeCategory, removeFilters, changeTitle, resetTitle} = useActions()
 
     const lastElement = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -43,7 +47,7 @@ const SearchPage:FC = () => {
 
     const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (limit: number, page: number) => {
         const response = await ItemsService.getAllItems(limit, page, filters)
-        const totalCount = parseInt(response.headers['x-total-count'])
+        const totalCount = parseInt(response.headers['x-total-count']) - 1
         if(page === 0) {
             setItems(response.data)
         }else{
@@ -56,8 +60,10 @@ const SearchPage:FC = () => {
     const fetchProperties = async () => {
         const col = await ColorsService.getAll()
         setColors(col.data)
-        const collect = await  CollectionsService.getAll()
+        const collect = await CollectionsService.getAll()
         setCollections(collect.data)
+        const cats = await CategoryService.getAll()
+        setCategories(cats.data)
     }
 
     useEffect(()=>{
@@ -66,12 +72,12 @@ const SearchPage:FC = () => {
 
     useEffect(()=>{
         setPage(0)
-        fetchItems(limit, page)
+        fetchItems(limit, 0)
     },[filters])
 
     useObserver(lastElement, page < totalPages, isItemsLoading,()=>{
-        setPage(page+1)
-        fetchItems(limit, page)
+        setPage(page + 1)
+        fetchItems(limit, page + 1)
     })
 
     return (
@@ -79,11 +85,12 @@ const SearchPage:FC = () => {
             <div>
                 <div className={classes.search__headbar}>
                     <div className={classes.filters__label_container}>
-                        <label className={classes.filters__label}>{(filters.name === undefined || filters.name === "")?"Filters":"Search: " + filters.name}</label>
+                        <label className={classes.filters__label}>{title.title}</label>
                         <IconButton
                             aria-label="delete"
                             onClick={()=>{
                                 removeFilters()
+                                resetTitle()
                             }}>
                             <Clear />
                         </IconButton>
@@ -154,8 +161,17 @@ const SearchPage:FC = () => {
                             </div>
                         </Dropdown>
                         <Dropdown header="Category">
-                            <div>For Men</div>
-                            <div>For Women</div>
+                            {categories.map(cat =>
+                                <div
+                                    key={cat.id}
+                                    onClick={()=> {
+                                        changeCategory(cat.name)
+                                        changeTitle("Category: " + cat.name)
+                                    }
+                                }
+                                >
+                                    {cat.name}
+                                </div>)}
                         </Dropdown>
                         <Dropdown header="Color">
                             <div >
@@ -164,7 +180,6 @@ const SearchPage:FC = () => {
                                     colors={colors}
                                     onClick={(color)=> {
                                         changeColors(color)
-                                        console.log(filters.cColors)
                                     }}/>
                             </div>
                         </Dropdown>
@@ -176,6 +191,7 @@ const SearchPage:FC = () => {
                                              style={{cursor: "pointer"}}
                                              onClick={()=>{
                                                  changeCollection(col.slug)
+                                                 changeTitle(col.name)
                                              }}
                                         >
                                             {col.name}
@@ -187,7 +203,6 @@ const SearchPage:FC = () => {
                     </div>
                 </div>
             </div>
-
             <div className={classes.collection}>
                 <CardList products={items}/>
             </div>
@@ -195,9 +210,9 @@ const SearchPage:FC = () => {
                 ?<div>
                     <Loader/>
                 </div>
-                :null
+                :<div ref={lastElement} className={classes.loader}/>
             }
-            <div ref={lastElement} className={classes.loader}/>
+
         </div>
     );
 };
