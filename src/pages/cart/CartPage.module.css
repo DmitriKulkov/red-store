@@ -1,6 +1,6 @@
 .cart{
     margin: 170px auto 30px auto;
-    width: 80vw;
+    width: 70vw;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -10,8 +10,6 @@
 .cart_items{
     width: 60%;
 }
-
-
 
 .cart_list{
     margin-left: 2%;

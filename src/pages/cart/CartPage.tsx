@@ -26,7 +26,7 @@ const CartPage = () => {
                                 .reduce(
                                     (sum, price)=>
                                         sum + parseFloat(price.split('$')[1]), 0
-                                )
+                                ).toFixed(2)
                         }
                     </h1>
                 </div>
