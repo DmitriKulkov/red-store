@@ -60,7 +60,7 @@
     width: 250px;
 }
 
-.item__price > button{
+.item__price > a{
     height: 30px;
     width: 200px;
     margin-left: 20px;

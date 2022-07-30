@@ -1,17 +1,19 @@
 import React, {FC, useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import classes from "./ItemPage.module.css";
 import {useFetching} from "../../hooks/useFetching";
 import ItemsService from "../../API/ItemsService";
 import {getPagesCount} from "../../components/utils/pages";
-import {initialState} from "../../filters/reducers/filterReducers";
+import {initialState} from "../../store/reducers/filterReducers";
 import {Product} from "../../entities/product.entity";
 import Loader from "../../components/UI/loader/Loader";
 import ColorList from "../../components/color-list/ColorList";
-import {Sizes} from "./sizes/sizes";
+import {Sizes} from "../../components/utils/sizes/sizes";
 import Select from "../../components/select/Select";
-import AddButton from "./add-button/AddButton";
+import AddButton from "../../components/add-button/AddButton";
 import CardList from "../../components/card-list/CardList";
+import {Color} from "../../entities/color.entity";
+import {useActions} from "../../hooks/useActions";
 
 
 const ItemPage:FC = () => {
@@ -22,11 +24,21 @@ const ItemPage:FC = () => {
     const [item, setItem] = useState<Product>()
     const [currentImage, setCurrentImage] = useState<string>()
     const [size, setSize] = useState<string>('1')
+    const [color, setColor] = useState<Color>()
+
+    const options = [
+        {value: 0, name: Sizes.S},
+        {value: 1, name: Sizes.M},
+        {value: 2, name: Sizes.L}
+    ]
+
+    const { addItem } = useActions()
 
     const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async () => {
         if(product) {
             const resItem = await ItemsService.getBySlug(product)
             setItem(resItem.data)
+            setColor(resItem.data.color[0])
             const resSame = await ItemsService.getAllItems(8, 0, {
                 ...initialState,
                 category: resItem.data.model.category.name
@@ -34,6 +46,7 @@ const ItemPage:FC = () => {
             const totalCount = parseInt(resSame.headers['x-total-count'])
             setSameItems([...sameItems, ...resSame.data])
             setTotalPages(getPagesCount(totalCount, limit))
+            setColor(resItem.data.color[0])
         }
     })
 
@@ -41,7 +54,7 @@ const ItemPage:FC = () => {
         fetchItems()
     },[])
 
-    if (item!==undefined) {
+    if (item !== undefined && color !== undefined) {
         return (
             <div>
                 <div className={classes.item__page}>
@@ -63,23 +76,29 @@ const ItemPage:FC = () => {
                         </div>
                         <div className={classes.item__about}>
                             <h1>{item.model.name}</h1>
-                            <p className={classes.item__text}>Colors:</p>
-                            <ColorList colors={[item.color]} onClick={()=>{}}/>
+                            <p className={classes.item__text}>Color:</p>
+                            <ColorList colors={item.color} onClick={(name)=>{setColor(name as Color)}} fullColor={true}/>
                             <Select
                                 value={size}
                                 defaultValue="Size"
                                 onChange={(e)=> {
                                     setSize(e.target.value)
+                                    console.log(size)
                                 }}
-                                options={[
-                                    {value: Sizes.S, name: "S"},
-                                    {value: Sizes.M, name: "M"},
-                                    {value: Sizes.L, name: "L"}
-                                ]}
+                                options={options}
                             />
                             <div className={classes.item__price}>
                                 <h1>{item.price}</h1>
-                                <AddButton>Add to cart</AddButton>
+                                <Link to={"/cart"}>
+                                    <AddButton onClick={()=>{addItem({
+                                        product: item,
+                                        color: color,
+                                        size: options[parseInt(size, 10)].name,
+                                        quantity: 1 })}}
+                                    >
+                                        Add to cart
+                                    </AddButton>
+                                </Link>
                             </div>
                             <p className={classes.item__subtitle}>About:</p>
                             <p className={classes.item__text}>{item.model.description}</p>

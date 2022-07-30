@@ -13,7 +13,7 @@ export interface Product{
         ends_at: string
     }|null,
     model: Model,
-    color: Color,
+    color: Color[],
     files: {
         id: number,
         name: string,

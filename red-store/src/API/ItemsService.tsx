@@ -1,7 +1,7 @@
 import React from 'react';
 import axios, {AxiosResponse} from "axios";
 import {Product} from "../entities/product.entity";
-import {FilterState} from "../filters/reducers/filterReducers";
+import {FilterState} from "../store/reducers/filterReducers";
 
 
 export default class ItemsService{

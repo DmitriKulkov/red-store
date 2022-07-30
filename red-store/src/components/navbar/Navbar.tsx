@@ -2,12 +2,13 @@ import React, {useState} from 'react'
 import classes from "./Navbar.module.css"
 import NavbarButton from "./navbarButton/NavbarButton";
 import Search from "../search-bar/Search";
-import LoginButton from "./loginButton/LoginButton";
 import logo from "./logo.png"
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
+import {ShoppingCartOutlined} from "@mui/icons-material";
+import {IconButton} from "@mui/material";
 
 const Navbar = () => {
     const [search, setSearch] = useState('')
@@ -51,8 +52,15 @@ const Navbar = () => {
                         />
                     </div>
                     <div className={classes.login_buttons__container}>
-                            <LoginButton>Log in</LoginButton>
-                            <LoginButton>Sign in</LoginButton>
+                        <IconButton
+                            aria-label="cart"
+                            onClick={()=>{
+                                navigate('/cart')
+                            }}>
+                            <ShoppingCartOutlined/>
+                        </IconButton>
+                        {/*<LoginButton>Log in</LoginButton>*/}
+                        {/*<LoginButton>Sign in</LoginButton>*/}
                     </div>
                 </div>
             </nav>

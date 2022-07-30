@@ -1,0 +1,27 @@
+.cart_short_list{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cart_short_list__card{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.cart_short_list__card > p{
+    font-size: 1.2rem;
+    color: #686868;
+    width: calc(1/2.2*100%);
+    margin: 1px;
+}
+
+.cart_short_list__card__price{
+    text-align: right;
+}
+

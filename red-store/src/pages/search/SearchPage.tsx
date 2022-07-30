@@ -32,8 +32,6 @@ const SearchPage:FC = () => {
     const [items, setItems] = useState<Product[]>([])
     const [diapason, setDiapason] = useState<{a:string, b:string}>({a:'0', b:'10000'})
 
-
-
     const [colors, setColors] = useState<Color[]>([])
     const [collections, setCollections] = useState<Collection[]>([])
     const [categories, setCategories] = useState<Category[]>([])
@@ -179,7 +177,7 @@ const SearchPage:FC = () => {
                                 <ColorList
                                     colors={colors}
                                     onClick={(color)=> {
-                                        changeColors(color)
+                                        changeColors(color as string)
                                     }}/>
                             </div>
                         </Dropdown>
