@@ -21,8 +21,9 @@
     gap: 5px;
 }
 
-.cart_card__info > h1{
+.cart_card__info > h2{
     margin: 5px;
+    font-size: 1.2rem;
 }
 
 .cart_card__attributes{
@@ -38,12 +39,13 @@
 
 .cart_card__attributes > p{
     margin-right: 10px;
+    font-size: 1rem;
 }
 
 .cart_card__price{
     position: absolute;
-    right: 15%;
-    bottom: 15%;
+    right: 10%;
+    bottom: 10%;
     color: #686868;
-    font-size: 1.2em;
+    font-size: 1.2rem;
 }

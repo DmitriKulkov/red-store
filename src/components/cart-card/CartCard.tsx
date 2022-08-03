@@ -13,10 +13,10 @@ const CartCard:FC<CartCardProps> = ({item}) => {
         <div className={classes.cart_card}>
             <img src={item.product.files[0].encoded_img} alt="item"/>
             <div className={classes.cart_card__info}>
-                <h1>{item.product.model.name}</h1>
+                <h2>{item.product.model.name}</h2>
                 <div className={classes.cart_card__attributes}>
                     <p>Color:</p>
-                    <ColorList colors={[item.color]} onClick={()=>{}}/>
+                    <ColorList colors={[item.color]} selected={[]} onClick={()=>{}}/>
                     <p>{item.color.name}</p>
                 </div>
                 <div className={classes.cart_card__attributes}>

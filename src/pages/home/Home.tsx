@@ -25,14 +25,16 @@ const Home:FC = () => {
     return (
         <div className={classes.home}>
             <div className={classes.background}>
-                <h1 className={classes.title}>Welcome new collection</h1>
-                <h1 className={classes.title__description}>
-                    Collection description, collection description. Collection <br/>
-                    description, collection <br/>
-                    description.Collection description, <br/>
-                    collection description.Collection description, <br/>
-                    collection description. <br/>
-                </h1>
+                <div className={classes.title_block}>
+                    <h1 className={classes.title}>Welcome new collection</h1>
+                    <h2 className={classes.description}>
+                        Collection description, collection description. Collection <br/>
+                        description, collection <br/>
+                        description.Collection description, <br/>
+                        collection description.Collection description, <br/>
+                        collection description. <br/>
+                    </h2>
+                </div>
             </div>
             <div className={classes.collection}>
                 <h1 className={classes.collection__title}>

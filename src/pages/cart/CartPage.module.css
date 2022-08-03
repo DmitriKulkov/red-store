@@ -1,5 +1,9 @@
 .cart{
     margin: 170px auto 30px auto;
+}
+
+.cart__not_empty{
+    margin: 170px auto 30px auto;
     width: 70vw;
     display: flex;
     flex-direction: row;
@@ -21,21 +25,21 @@
     flex-direction: column;
 }
 
-.cart_list > h1{
-    font-size: 1.5rem;
-}
-
 .cart_list__total_price{
     margin-bottom: 10px;
 }
 
-.cart_list__total_price > h1{
+.cart_list__total_price > h2,h3{
     margin: 5px;
-    font-size: 1.5rem;
 }
 
 .cart_list__purchase_button{
     width: 35%;
+}
+
+.cart__empty{
+    text-align: center;
+    color: #686868;
 }
 
 @media (max-width: 900px) {

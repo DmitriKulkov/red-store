@@ -14,6 +14,7 @@ import AddButton from "../../components/add-button/AddButton";
 import CardList from "../../components/card-list/CardList";
 import {Color} from "../../entities/color.entity";
 import {useActions} from "../../hooks/useActions";
+import {hrHR} from "@mui/material/locale";
 
 
 const ItemPage:FC = () => {
@@ -44,7 +45,8 @@ const ItemPage:FC = () => {
                 category: resItem.data.model.category.name
             })
             const totalCount = parseInt(resSame.headers['x-total-count'])
-            setSameItems([...sameItems, ...resSame.data])
+            setSameItems([])
+            setSameItems(resSame.data.filter((product)=>product.model.slug != resItem.data.model.slug))
             setTotalPages(getPagesCount(totalCount, limit))
             setColor(resItem.data.color[0])
         }
@@ -52,64 +54,66 @@ const ItemPage:FC = () => {
 
     useEffect(()=>{
         fetchItems()
-    },[])
+    },[product])
 
     if (item !== undefined && color !== undefined) {
         return (
-            <div>
-                <div className={classes.item__page}>
-                    <div className={classes.item}>
-                        <div className={classes.images}>
-                            <div className={classes.images__all}>
-                                {
-                                    item.files.map((file)=>
-                                        <img
-                                            key={file.id}
-                                            src={file.encoded_img}
-                                            alt="item"
-                                            onClick = {()=>{setCurrentImage(file.encoded_img)}}
-                                        />
-                                    )
-                                }
-                            </div>
-                            <img src={currentImage === undefined?item.files[0].encoded_img:currentImage} alt="item" className={classes.images__selected}/>
+            <div className={classes.item__page}>
+                <div className={classes.item}>
+                    <div className={classes.images}>
+                        <div className={classes.images__all}>
+                            {
+                                item.files.map((file)=>
+                                    <img
+                                        key={file.id}
+                                        src={file.encoded_img}
+                                        alt="item"
+                                        onClick = {()=>{setCurrentImage(file.encoded_img)}}
+                                    />
+                                )
+                            }
                         </div>
-                        <div className={classes.item__about}>
-                            <h1>{item.model.name}</h1>
-                            <p className={classes.item__text}>Color:</p>
-                            <ColorList colors={item.color} onClick={(name)=>{setColor(name as Color)}} fullColor={true}/>
-                            <Select
-                                value={size}
-                                defaultValue="Size"
-                                onChange={(e)=> {
-                                    setSize(e.target.value)
-                                    console.log(size)
-                                }}
-                                options={options}
-                            />
-                            <div className={classes.item__price}>
-                                <h1>{item.price}</h1>
-                                <Link to={"/cart"}>
-                                    <AddButton onClick={()=>{addItem({
-                                        product: item,
-                                        color: color,
-                                        size: options[parseInt(size, 10)].name,
-                                        quantity: 1 })}}
-                                    >
-                                        Add to cart
-                                    </AddButton>
-                                </Link>
-                            </div>
-                            <p className={classes.item__subtitle}>About:</p>
-                            <p className={classes.item__text}>{item.model.description}</p>
-                        </div>
+                        <img src={currentImage === undefined?item.files[0].encoded_img:currentImage} alt="item" className={classes.images__selected}/>
                     </div>
-                    <hr/>
-                    <div className={classes.item__same}>
-                        <h1 className={classes.item__same__title}>You may also like: </h1>
-                        <CardList products={sameItems}/>
+                    <div className={classes.item__about}>
+                        <h2>{item.model.name}</h2>
+                        <p className={classes.item__text}>Color:</p>
+                        <ColorList colors={item.color} selected={[color.name]} onClick={(name)=>{setColor(name as Color)}} fullColor={true}/>
+                        <Select
+                            value={size}
+                            defaultValue="Size"
+                            onChange={(e)=> {
+                                setSize(e.target.value)
+                                console.log(size)
+                            }}
+                            options={options}
+                        />
+                        <div className={classes.item__price}>
+                            <h2>{item.price}</h2>
+                            <Link to={"/cart"}>
+                                <AddButton onClick={()=>{addItem({
+                                    product: item,
+                                    color: color,
+                                    size: options[parseInt(size, 10)].name,
+                                    quantity: 1 })}}
+                                >
+                                    Add to cart
+                                </AddButton>
+                            </Link>
+                        </div>
+                        <p className={classes.item__subtitle}>About:</p>
+                        <p className={classes.item__text}>{item.model.description}</p>
                     </div>
                 </div>
+                <hr/>
+                {
+                    sameItems.length !== 0?
+                        <div className={classes.item__same}>
+                            <h2>You may also like: </h2>
+                            <CardList products={sameItems}/>
+                        </div>
+                        : null
+                }
             </div>
         );
     } else {

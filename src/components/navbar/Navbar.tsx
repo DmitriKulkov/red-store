@@ -7,8 +7,9 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
-import {ShoppingCartOutlined} from "@mui/icons-material";
+import {ShoppingCartOutlined, Menu, ArrowBackIos} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
+import BurgerMenu from "../burger-menu/BurgerMenu";
 
 const Navbar = () => {
     const [search, setSearch] = useState('')
@@ -16,12 +17,16 @@ const Navbar = () => {
     const dispatch = useDispatch()
     const filters = useTypedSelector(state => state.filters)
     const {changeName, changeTitle} = useActions()
+
+
     return (
         <header className={classes.navbar}>
             <div className={classes.headbar}>
+                <BurgerMenu className={classes.menu}/>
                 <img src={logo} className={classes.logo} alt='logo'/>
                 <Link to={'/home'} className={classes.headbar__link}>
-                    <h1 className={classes.headbar__h1}>RedShop</h1>
+                    <h1 id="longtitle" className={classes.headbar__long_title}>RedShop</h1>
+                    <h1 id="shorttitle" className={classes.headbar__short_title}>Red</h1>
                 </Link>
             </div>
             <nav className={classes.buttonbar}>
@@ -35,23 +40,28 @@ const Navbar = () => {
                     <div className={classes.search__container}>
                         <Search
                             value={search}
-                            onChange={(value)=>setSearch(value)}
+                            onChange={(e)=>setSearch(e.target.value)}
                             onSubmit={(e)=> {
                                 e.preventDefault()
-                                navigate('/search')
-                                changeName(search)
-                                changeTitle("Search: " + search)
-                                console.log(search)
+                                if (search !== "") {
+                                    navigate('/search')
+                                    changeName(search)
+                                    changeTitle("Search: " + search)
+                                    setSearch("")
+                                }
                             }}
                             onClick={(e)=> {
                                 e.preventDefault()
-                                navigate('/search')
-                                changeName(search)
-                                changeTitle("Search: " + search)
+                                if (search !== "") {
+                                    navigate('/search')
+                                    changeName(search)
+                                    changeTitle("Search: " + search)
+                                    setSearch("")
+                                }
                             }}
                         />
                     </div>
-                    <div className={classes.login_buttons__container}>
+                    <div className={classes.cart_button_container}>
                         <IconButton
                             aria-label="cart"
                             onClick={()=>{

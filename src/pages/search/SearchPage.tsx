@@ -13,7 +13,7 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useDebouncedCallback} from "use-debounce";
 import {Checkbox, IconButton} from "@mui/material";
 import {useActions} from "../../hooks/useActions";
-import {Clear} from "@mui/icons-material"
+import {Clear, KeyboardArrowDown} from "@mui/icons-material"
 import {getPagesCount} from "../../components/utils/pages";
 import {useObserver} from "../../hooks/useObserver";
 import {useFetching} from "../../hooks/useFetching";
@@ -82,6 +82,13 @@ const SearchPage:FC = () => {
         <div className={classes.search}>
             <div>
                 <div className={classes.search__headbar}>
+                    <div className={classes.filters__menu}>
+                        <IconButton
+                            aria-label="filters"
+                        >
+                            <KeyboardArrowDown sx={{fontSize: "40px", color: "#686868"}}/>
+                        </IconButton>
+                    </div>
                     <div className={classes.filters__label_container}>
                         <label className={classes.filters__label}>{title.title}</label>
                         <IconButton
@@ -176,6 +183,7 @@ const SearchPage:FC = () => {
                                 <p>Colors:</p>
                                 <ColorList
                                     colors={colors}
+                                    selected={filters.cColors}
                                     onClick={(color)=> {
                                         changeColors(color as string)
                                     }}/>

@@ -19,7 +19,14 @@
     background: #CC1010;
     border-bottom: 1px solid black;
 }
-.headbar__h1{
+.headbar__long_title{
+    display: block;
+    color: white;
+    font: 50px ABeeZee, sans-serif;
+}
+
+.headbar__short_title{
+    display: none;
     color: white;
     font: 50px ABeeZee, sans-serif;
 }
@@ -36,13 +43,14 @@
     height: 100%;
     width: 100%;
     display: flex;
+    justify-content: center;
 }
 
 .search__container{
     width: 22vw;
 }
 
-.login_buttons__container{
+.cart_button_container{
     margin-left: 3vw;
     margin-right: 1vw;
     height: 100%;
@@ -59,9 +67,9 @@
 }
 
 .logo{
-    --logo-size: 12vw;
-    width: var(--logo-size);
-    height: var(--logo-size);
+    width: 12vw;
+    aspect-ratio: 1/1;
+    max-width: 200px;
     position: absolute;
     z-index: 0;
     top: 15px;
@@ -75,4 +83,52 @@
     height: 100%;
     margin-left: 20vw;
     margin-right: 1vw;
+}
+
+.menu{
+    display: none;
+}
+
+@media (max-width: 800px) {
+    .buttons{
+        display: none;
+    }
+
+    .logo{
+        display: none;
+    }
+
+    .search__container{
+        width: 90%;
+    }
+
+    .buttons__container{
+        display: flex;
+        margin-left: 0;
+        margin-right: 0;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cart_button_container{
+        display: none;
+    }
+    .menu{
+        display: block;
+    }
+}
+
+@media (max-width: 400px) {
+    .headbar__long_title{
+        display: none;
+        color: white;
+        font: 50px ABeeZee, sans-serif;
+    }
+
+    .headbar__short_title{
+        display: block;
+        color: white;
+        font: 50px ABeeZee, sans-serif;
+    }
 }

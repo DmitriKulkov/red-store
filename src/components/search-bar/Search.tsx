@@ -4,7 +4,7 @@ import magn from './pngegg.png'
 
 interface SearchProps{
     value?: string;
-    onChange?: (value:string)=>void;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
     onSubmit?: FormEventHandler<HTMLFormElement>
     onClick?: MouseEventHandler
 }
@@ -16,7 +16,7 @@ const Search: FC<SearchProps> = ({value, onChange, onSubmit, onClick}) => {
                     type="search"
                     placeholder='Search'
                     value={value}
-                    onChange={e=> onChange ? onChange(e.target.value):{}}
+                    onChange={onChange ? onChange:undefined}
                 />
                 <img src={magn} alt="search" onClick={onClick}/>
             </form>

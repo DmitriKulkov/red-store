@@ -11,30 +11,42 @@ const CartPage = () => {
 
     return (
         <div className={classes.cart}>
-            <div className={classes.cart_items}>
-                <CartCardList cart={cart}/>
-            </div>
-            <div className={classes.cart_list}>
-                <h1>Items: </h1>
-                <CartShortList cart={cart}/>
-                <div className={classes.cart_list__total_price}>
-                    <h1>Total: </h1>
-                    <h1>
-                        {
-                            '$' + cart.items
-                                .map((item)=>item.product.price)
-                                .reduce(
-                                    (sum, price)=>
-                                        sum + parseFloat(price.split('$')[1]), 0
-                                ).toFixed(2)
-                        }
-                    </h1>
-                </div>
-                <div className={classes.cart_list__purchase_button}>
-                    <AddButton>Purchase</AddButton>
-                </div>
-            </div>
+            {
+                cart.items.length === 0?
+                    <div className={classes.cart__empty}>
+                        <h2>
+                            Your cart is empty
+                        </h2>
+                    </div>
+                    :<div className={classes.cart__not_empty}>
+                        <div className={classes.cart_items}>
+                            <CartCardList cart={cart}/>
+                        </div>
+                        <div className={classes.cart_list}>
+                            <h2>Items: </h2>
+                            <CartShortList cart={cart}/>
+                            <div className={classes.cart_list__total_price}>
+                                <h2>Total: </h2>
+                                <h3>
+                                    {
+                                        '$' + cart.items
+                                            .map((item)=>item.product.price)
+                                            .reduce(
+                                                (sum, price)=>
+                                                    sum + parseFloat(price.split('$')[1]), 0
+                                            ).toFixed(2)
+                                    }
+                                </h3>
+                            </div>
+                            <div className={classes.cart_list__purchase_button}>
+                                <AddButton>Purchase</AddButton>
+                            </div>
+                        </div>
+                    </div>
+            }
         </div>
+
+
     );
 };
 

@@ -14,8 +14,8 @@ const Card:FC<CardProps> = ({ item}) => {
             <Link to={'/product/' + item.model.slug} className={classes.link}>
                 <img src={item.files[0].encoded_img} alt="item"/>
                 <div>
-                    <h1>{item.model.name}</h1>
-                    <h1>{item.price}</h1>
+                    <p>{item.model.name}</p>
+                    <p>{item.price}</p>
                 </div>
             </Link>
         </div>
