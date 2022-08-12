@@ -1,5 +1,6 @@
 .search{
-    margin: 150px 0 30px 0;
+    margin-top: 150px;
+    min-height: calc(100vh - 150px)
 }
 
 .search__headbar{
@@ -11,6 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 1;
 }
 
 .filters{
@@ -33,7 +35,7 @@
 
 .collection{
     width: 100%;
-    padding: 0 calc((100% - 1400px)/2) 50px calc((100% - 1400px)/2);
+    padding: 0 calc((100% - 1400px)/2) 0 calc((100% - 1400px)/2);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,6 +83,10 @@
     display: none;
 }
 
+.loader{
+    justify-content: center;
+    align-items: center;
+}
 @media (max-width: 800px){
     .filters{
         display: none;
@@ -95,12 +101,11 @@
 
     .filters__menu{
         display: block;
-        position: absolute;
-        left: 10px;
-        top: 12px;
     }
     .filters__label{
         font-size: 25px;
     }
+
+
 
 }

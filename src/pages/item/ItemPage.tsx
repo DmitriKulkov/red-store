@@ -15,6 +15,7 @@ import CardList from "../../components/card-list/CardList";
 import {Color} from "../../entities/color.entity";
 import {useActions} from "../../hooks/useActions";
 import {hrHR} from "@mui/material/locale";
+import InformationBar from "../../components/information-bar/InformationBar";
 
 
 const ItemPage:FC = () => {
@@ -114,12 +115,14 @@ const ItemPage:FC = () => {
                         </div>
                         : null
                 }
+                <InformationBar/>
             </div>
         );
     } else {
         return (
             <div>
                 <Loader/>
+                {/*<InformationBar/>*/}
             </div>
         );
     }

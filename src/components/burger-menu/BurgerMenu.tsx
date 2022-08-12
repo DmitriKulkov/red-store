@@ -22,7 +22,14 @@ const BurgerMenu:FC<BurgerMenuProps> = ({className}) => {
             >
                 <Menu sx={{fontSize: "45px", color: "white"}}/>
             </IconButton>
-            <div className={classes.menu__blur} style={menuOpened?{display: "block"}:{display: "none"}}/>
+            <div
+                className={classes.menu__blur}
+                style={menuOpened?{display: "block"}:{display: "none"}}
+                onClick={(e)=>{
+                    e.stopPropagation()
+                    setMenuOpened(false)
+                }}
+            />
             <div
                 className={classes.menu__window}
                 style={menuOpened?{display: "block"}:{display: "none"}}
@@ -44,6 +51,7 @@ const BurgerMenu:FC<BurgerMenuProps> = ({className}) => {
                             aria-label="cart"
                             onClick={()=>{
                                 navigate('/cart')
+                                setMenuOpened(false)
                             }}>
                             <ShoppingCartOutlined sx={{fontSize: "30px", color: "#686868"}}/>
                         </IconButton>

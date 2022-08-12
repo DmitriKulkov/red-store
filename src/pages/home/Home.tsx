@@ -3,6 +3,7 @@ import classes from './Home.module.css'
 import CardList from "../../components/card-list/CardList";
 import ItemsService from "../../API/ItemsService";
 import {Product} from "../../entities/product.entity";
+import InformationBar from "../../components/information-bar/InformationBar";
 
 
 
@@ -42,6 +43,7 @@ const Home:FC = () => {
                 </h1>
                 <CardList products={items}/>
             </div>
+            {/*<InformationBar/>*/}
         </div>
     )
 }

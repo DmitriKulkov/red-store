@@ -1,0 +1,16 @@
+.tab__container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tab__header{
+    width: 100%;
+    border-bottom: 1px solid gray;
+    padding-left: 2vw;
+}
+
+.tab__content{
+    border-bottom: 1px solid gray;
+    padding: 5px 0 5px 5vw;
+}

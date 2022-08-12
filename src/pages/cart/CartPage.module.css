@@ -1,10 +1,12 @@
 .cart{
-    margin: 170px auto 30px auto;
+    margin: 170px auto 0 auto;
+    min-height: calc(100vh - 170px);
 }
 
 .cart__not_empty{
-    margin: 170px auto 30px auto;
+    margin: 170px auto 0 auto;
     width: 70vw;
+    height: calc(100vw - 170px);
     display: flex;
     flex-direction: row;
     justify-content: center;

@@ -1,5 +1,6 @@
 .item__page{
     margin: 175px auto 0 auto;
+    min-height: calc(100vh - 175px)
 }
 
 .item__page > hr{

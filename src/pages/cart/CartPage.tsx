@@ -5,6 +5,7 @@ import CartCard from "../../components/cart-card/CartCard";
 import CartCardList from "../../components/cart-lists/cart-card-list/CartCardList";
 import CartShortList from "../../components/cart-lists/cart-short-list/CartShortList";
 import AddButton from "../../components/add-button/AddButton";
+import InformationBar from "../../components/information-bar/InformationBar";
 
 const CartPage = () => {
     const cart = useTypedSelector(state=>state.cart)
@@ -44,6 +45,7 @@ const CartPage = () => {
                         </div>
                     </div>
             }
+            {/*<InformationBar/>*/}
         </div>
 
 

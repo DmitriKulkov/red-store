@@ -1,11 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Actor&display=swap');
-*{
-    font-family: Actor, sans-serif;
-}
-
 .navbar{
     position: fixed;
-    z-index: 1;
+    z-index: 5;
     width: 100vw;
     top: 0;
 }
