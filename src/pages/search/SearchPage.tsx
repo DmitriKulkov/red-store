@@ -8,12 +8,10 @@ import ColorsService from "../../API/ColorsService";
 import {Color} from "../../entities/color.entity";
 import {Collection} from "../../entities/collection.entity";
 import {CollectionsService} from "../../API/CollectionsService";
-import ColorList from "../../components/color-list/ColorList";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {useDebouncedCallback} from "use-debounce";
-import {Checkbox, IconButton} from "@mui/material";
+import {IconButton} from "@mui/material";
 import {useActions} from "../../hooks/useActions";
-import {Clear, KeyboardArrowDown} from "@mui/icons-material"
+import {Clear} from "@mui/icons-material"
 import {getPagesCount} from "../../components/utils/pages";
 import {useObserver} from "../../hooks/useObserver";
 import {useFetching} from "../../hooks/useFetching";
@@ -26,7 +24,6 @@ import ColorFilter from "./filters/color-filter/ColorFilter";
 import CollectionFilter from "./filters/collection-filter/CollectionFilter";
 import FilterDropdown from "../../components/filters-dropdown/FilterDropdown";
 import FilterTab from "../../components/tab/Tab";
-import InformationBar from "../../components/information-bar/InformationBar";
 
 
 const SearchPage:FC = () => {

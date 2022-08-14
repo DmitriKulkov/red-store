@@ -11,12 +11,11 @@ export default class ItemsService{
             params:{
                 _limit: limit,
                 _page: page,
-                _name: filters.name,
+                _search: filters.name?.toLowerCase(),
                 _sortPrice: filters.sortPrice,
                 _priceFloor: filters.priceDiapason.a,
                 _priceTop: filters.priceDiapason.b,
                 _collection: filters.collection,
-                // _gender:
                 _cColors: filters.cColors,
                 _category: filters.category
             }

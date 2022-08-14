@@ -69,8 +69,6 @@ const Navbar = () => {
                             }}>
                             <ShoppingCartOutlined/>
                         </IconButton>
-                        {/*<LoginButton>Log in</LoginButton>*/}
-                        {/*<LoginButton>Sign in</LoginButton>*/}
                     </div>
                 </div>
             </nav>

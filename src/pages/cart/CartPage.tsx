@@ -27,7 +27,7 @@ const CartPage = () => {
                             <h2>Items: </h2>
                             <CartShortList cart={cart}/>
                             <div className={classes.cart_list__total_price}>
-                                <h2>Total: </h2>
+                                <h3>Total: </h3>
                                 <h3>
                                     {
                                         '$' + cart.items
