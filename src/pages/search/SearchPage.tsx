@@ -137,7 +137,6 @@ const SearchPage:FC = () => {
                 </div>
                 :<div ref={lastElement} className={classes.loader}/>
             }
-            {/*<InformationBar/>*/}
         </div>
     );
 };

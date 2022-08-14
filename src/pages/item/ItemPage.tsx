@@ -115,14 +115,12 @@ const ItemPage:FC = () => {
                         </div>
                         : null
                 }
-                <InformationBar/>
             </div>
         );
     } else {
         return (
             <div>
                 <Loader/>
-                {/*<InformationBar/>*/}
             </div>
         );
     }

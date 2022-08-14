@@ -43,7 +43,6 @@ const Home:FC = () => {
                 </h1>
                 <CardList products={items}/>
             </div>
-            {/*<InformationBar/>*/}
         </div>
     )
 }

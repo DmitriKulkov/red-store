@@ -45,7 +45,6 @@ const CartPage = () => {
                         </div>
                     </div>
             }
-            {/*<InformationBar/>*/}
         </div>
 
 
