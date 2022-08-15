@@ -10,16 +10,13 @@ interface CardListProps{
 
 const CardList:FC<CardListProps> = ({products}, ) => {
     return (
-        <TransitionGroup className={classes.cardList}>
+        <div className={classes.cardList}>
             {products.map((product)=>
-                <Transition
-                    key={product.id}
-                    timeout={500}
-                >
-                    <Card item={product}/>
-                </Transition>
+                    <Card
+                        key={product.id}
+                        item={product}/>
             )}
-        </TransitionGroup>
+        </div>
     );
 };
 export default CardList;

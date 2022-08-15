@@ -49,3 +49,9 @@
     color: #686868;
     font-size: 1.2rem;
 }
+
+.remove_button{
+    position: absolute;
+    top: 10%;
+    right: 10%;
+}

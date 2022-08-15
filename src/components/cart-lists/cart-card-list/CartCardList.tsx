@@ -5,9 +5,10 @@ import {CartState} from "../../../store/reducers/cartRedusers";
 
 interface CartCardListProps{
     cart: CartState
+    remove: (id: number)=>void
 }
 
-const CartCardList:FC<CartCardListProps> = ({cart}) => {
+const CartCardList:FC<CartCardListProps> = ({cart, remove}) => {
     return (
         <div className={classes.cart_card_list}>
             {cart.items.map((item)=>
@@ -15,7 +16,7 @@ const CartCardList:FC<CartCardListProps> = ({cart}) => {
                     className={classes.cart_card_list__card}
                     key={item.id}
                 >
-                    <CartCard item={item}/>
+                    <CartCard item={item} remove={remove}/>
                 </div>
             )}
         </div>

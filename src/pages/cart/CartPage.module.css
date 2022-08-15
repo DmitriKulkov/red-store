@@ -6,7 +6,7 @@
 .cart__not_empty{
     margin: 170px auto 0 auto;
     width: 70vw;
-    height: calc(100vw - 170px);
+    min-height: calc(100vw - 170px);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -15,6 +15,8 @@
 
 .cart_items{
     width: 60%;
+    height: fit-content;
+    margin-bottom: 30px;
 }
 
 .cart_list{
@@ -46,7 +48,7 @@
     color: #686868;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
     .cart_items{
         display: none;
     }

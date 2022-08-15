@@ -6,9 +6,11 @@ import CartCardList from "../../components/cart-lists/cart-card-list/CartCardLis
 import CartShortList from "../../components/cart-lists/cart-short-list/CartShortList";
 import AddButton from "../../components/add-button/AddButton";
 import InformationBar from "../../components/information-bar/InformationBar";
+import {useActions} from "../../hooks/useActions";
 
 const CartPage = () => {
     const cart = useTypedSelector(state=>state.cart)
+    const { removeItem } = useActions()
 
     return (
         <div className={classes.cart}>
@@ -21,7 +23,7 @@ const CartPage = () => {
                     </div>
                     :<div className={classes.cart__not_empty}>
                         <div className={classes.cart_items}>
-                            <CartCardList cart={cart}/>
+                            <CartCardList cart={cart} remove={removeItem}/>
                         </div>
                         <div className={classes.cart_list}>
                             <h2>Items: </h2>

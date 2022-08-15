@@ -5,7 +5,7 @@ import classes from "./ColorList.module.css"
 interface ColorListProps {
     colors: Color[],
     selected: string[],
-    onClick: (color: string | Color) => void,
+    onClick?: (color: string | Color) => void,
     fullColor?: boolean
 }
 const ColorList:FC<ColorListProps> = ({colors, selected, onClick, fullColor}) => {
@@ -16,7 +16,7 @@ const ColorList:FC<ColorListProps> = ({colors, selected, onClick, fullColor}) =>
                     key={col.name}
                     style={{background: col.hex}}
                     className={selected.includes(col.name)? classes.color + " " + classes.color__selected: classes.color}
-                    onClick={()=>onClick(fullColor?col:col.name)}
+                    onClick={()=> onClick ? onClick(fullColor ? col : col.name) : null}
                 ></div>
             )}
         </div>

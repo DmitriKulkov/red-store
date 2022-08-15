@@ -134,6 +134,12 @@ const SearchPage:FC = () => {
                 </div>
                 :<div ref={lastElement} className={classes.loader}/>
             }
+            {(!isItemsLoading && items.length == 0)?
+                <div className={classes.items_empty}>
+                    <h2>Sorry, we don't have this product yet</h2>
+                </div>
+                :null
+            }
         </div>
     );
 };

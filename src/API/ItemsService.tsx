@@ -17,7 +17,8 @@ export default class ItemsService{
                 _priceTop: filters.priceDiapason.b,
                 _collection: filters.collection,
                 _cColors: filters.cColors,
-                _category: filters.category
+                _category: filters.category,
+                _globCat: filters.globCat
             }
         })
         return response

@@ -4,6 +4,9 @@ import CardList from "../../components/card-list/CardList";
 import ItemsService from "../../API/ItemsService";
 import {Product} from "../../entities/product.entity";
 import InformationBar from "../../components/information-bar/InformationBar";
+import {useFetching} from "../../hooks/useFetching";
+import {getPagesCount} from "../../components/utils/pages";
+import Loader from "../../components/UI/loader/Loader";
 
 
 
@@ -14,10 +17,10 @@ const Home:FC = () => {
     const [items, setItems] = useState<Product[]>([])
 
 
-    const fetchItems = async (limit: number, page: number) => {
+    const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (limit: number, page: number) => {
         const response = await ItemsService.getItemsByCollection('summer-collection', limit, page).then()
         setItems([...items, ...response.data])
-    }
+    })
 
     useEffect(()=>{
         fetchItems(limit, page)
@@ -42,6 +45,12 @@ const Home:FC = () => {
                     Summer collection
                 </h1>
                 <CardList products={items}/>
+                {isItemsLoading?
+                    <div className={classes.loader}>
+                        <Loader/>
+                    </div>
+                    :null
+                }
             </div>
         </div>
     )

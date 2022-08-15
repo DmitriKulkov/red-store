@@ -87,6 +87,12 @@
     justify-content: center;
     align-items: center;
 }
+
+.items_empty{
+    text-align: center;
+    color: #686868;
+}
+
 @media (max-width: 800px){
     .filters{
         display: none;

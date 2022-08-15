@@ -41,6 +41,12 @@ export const changeCategory = (category: string) => {
     }
 }
 
+export const changeGCategory = (globCat: string) => {
+    return (dispatch: Dispatch<SetFilterAction>) => {
+        dispatch({type: actionType.SET_GCATEGORY, globCat: globCat})
+    }
+}
+
 export const removeFilters = () => {
     return(dispatch: Dispatch<SetFilterAction>)=> {
         dispatch({type: actionType.REMOVE_FILTERS})

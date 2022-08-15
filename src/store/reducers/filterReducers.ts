@@ -8,6 +8,7 @@ export enum actionType {
     REMOVE_FILTERS = "REMOVE_FILTERS",
     SET_NAME = "SET_NAME",
     SET_CATEGORY = "SET_CATEGORY",
+    SET_GCATEGORY = "SET_GCATEGORY"
 }
 
 export type SetFilterAction = SetSortPriceAction |
@@ -17,7 +18,8 @@ export type SetFilterAction = SetSortPriceAction |
     SetColorAction |
     SetNameAction |
     SetCategoryAction |
-    RemoveFiltersAction
+    RemoveFiltersAction |
+    SetGlobalCategoryAction
 
 export interface SetSortPriceAction {
     type: actionType.SET_SORT_PRICE;
@@ -50,6 +52,11 @@ export interface SetCategoryAction {
     category: string;
 }
 
+export interface SetGlobalCategoryAction {
+    type: actionType.SET_GCATEGORY;
+    globCat: string;
+}
+
 export interface RemoveFiltersAction {
     type: actionType.REMOVE_FILTERS;
 }
@@ -62,6 +69,7 @@ export interface FilterState {
     cColors: string[];
     name?: string;
     category?: string;
+    globCat?: string;
 }
 
 export const initialState: FilterState = {
@@ -99,6 +107,9 @@ export const filterReducer= (state = initialState, action: SetFilterAction): Fil
             return state
         case actionType.SET_CATEGORY:
             state = {...state, category: action.category}
+            return state
+        case actionType.SET_GCATEGORY:
+            state = {...state, globCat: action.globCat}
             return state
         case actionType.REMOVE_FILTERS:
             state = initialState

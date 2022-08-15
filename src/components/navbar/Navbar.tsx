@@ -4,8 +4,6 @@ import NavbarButton from "./navbarButton/NavbarButton";
 import Search from "../search-bar/Search";
 import logo from "./logo.png"
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
 import {ShoppingCartOutlined, Menu, ArrowBackIos} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
@@ -14,9 +12,7 @@ import BurgerMenu from "../burger-menu/BurgerMenu";
 const Navbar = () => {
     const [search, setSearch] = useState('')
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const filters = useTypedSelector(state => state.filters)
-    const {changeName, changeTitle} = useActions()
+    const {changeName, changeTitle, changeGCategory} = useActions()
 
 
     return (
@@ -32,10 +28,21 @@ const Navbar = () => {
             <nav className={classes.buttonbar}>
                 <div className={classes.buttons__container}>
                     <div className={classes.buttons}>
-                        <NavbarButton link={'/search'}>New!</NavbarButton>
-                        <NavbarButton link={'/search'}>Clothes</NavbarButton>
-                        <NavbarButton link={'/search'}>Shoes</NavbarButton>
-                        <NavbarButton link={'/search'}>Collections</NavbarButton>
+                        <NavbarButton link={'/search'} onClick={()=>{
+                            changeTitle('New')}
+                        }>New!</NavbarButton>
+                        <NavbarButton link={'/search'} onClick={()=>{
+                            changeTitle('Clothes')
+                            changeGCategory('clothes')
+                        }}>Clothes</NavbarButton>
+                        <NavbarButton link={'/search'} onClick={()=>{
+                            changeTitle('Shoes')
+                            changeGCategory('shoes')
+                        }}>Shoes</NavbarButton>
+                        <NavbarButton link={'/search'} onClick={()=>{
+                            changeTitle('Accessories')
+                            changeGCategory('accessories')
+                        }}>Accessories</NavbarButton>
                     </div>
                     <div className={classes.search__container}>
                         <Search
