@@ -69,13 +69,14 @@ export interface FilterState {
     cColors: string[];
     name?: string;
     category?: string;
-    globCat?: string;
+    globCat: string;
 }
 
 export const initialState: FilterState = {
     sortPrice: 1,
     priceDiapason: {a: 0, b:10000},
     cColors: [],
+    globCat: ""
 }
 
 export const filterReducer= (state = initialState, action: SetFilterAction): FilterState => {
@@ -109,7 +110,7 @@ export const filterReducer= (state = initialState, action: SetFilterAction): Fil
             state = {...state, category: action.category}
             return state
         case actionType.SET_GCATEGORY:
-            state = {...state, globCat: action.globCat}
+            state = {...state, globCat: action.globCat, }
             return state
         case actionType.REMOVE_FILTERS:
             state = initialState

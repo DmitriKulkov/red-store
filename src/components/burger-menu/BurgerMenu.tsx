@@ -3,6 +3,7 @@ import classes from "./BurgerMenu.module.css";
 import {IconButton} from "@mui/material";
 import {ArrowBackIos, Menu, ShoppingCartOutlined} from "@mui/icons-material";
 import {Link, useNavigate} from "react-router-dom";
+import {useActions} from "../../hooks/useActions";
 
 interface BurgerMenuProps{
     className?: string;
@@ -11,6 +12,7 @@ interface BurgerMenuProps{
 const BurgerMenu:FC<BurgerMenuProps> = ({className}) => {
     const [menuOpened, setMenuOpened] = useState<boolean>(false)
     const navigate = useNavigate()
+    const {changeName, changeTitle, changeGCategory} = useActions()
 
     return (
         <div className={classes.menu__button + " " + className}>
@@ -60,27 +62,42 @@ const BurgerMenu:FC<BurgerMenuProps> = ({className}) => {
                 <div className={classes.menu__window__content}>
                     <Link
                         to={"/search"}
-                        onClick={()=>{setMenuOpened(false)}}
+                        onClick={()=>{
+                            setMenuOpened(false)
+                            changeTitle('New')
+                        }}
                     >
                         <p>New!</p>
                     </Link>
                     <Link
                         to={"/search"}
-                        onClick={()=>{setMenuOpened(false)}}
+                        onClick={()=>{
+                            setMenuOpened(false)
+                            changeGCategory("clothes")
+                            changeTitle('Clothes')
+                        }}
                     >
                         <p>Clothes</p>
                     </Link>
                     <Link
                         to={"/search"}
-                        onClick={()=>{setMenuOpened(false)}}
+                        onClick={()=>{
+                            setMenuOpened(false)
+                            changeGCategory("shoes")
+                            changeTitle('Shoes')
+                        }}
                     >
                         <p>Shoes</p>
                     </Link>
                     <Link
                         to={"/search"}
-                        onClick={()=>{setMenuOpened(false)}}
+                        onClick={()=>{
+                            setMenuOpened(false)
+                            changeGCategory("accessories")
+                            changeTitle('Accessories')
+                        }}
                     >
-                        <p>Collections</p>
+                        <p>Accessories</p>
                     </Link>
                 </div>
             </div>

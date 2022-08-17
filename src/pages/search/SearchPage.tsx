@@ -45,25 +45,32 @@ const SearchPage:FC = () => {
 
 
 
-    const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (limit: number, page: number) => {
-        const response = await ItemsService.getAllItems(limit, page, filters)
-        const totalCount = parseInt(response.headers['x-total-count']) - 1
-        if(page === 0) {
-            setItems(response.data)
-        }else{
-            setItems([...items, ...response.data])
-        }
-        setTotalPages(getPagesCount(totalCount, limit))
+    const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (_limit: number, _page: number, _items: Product[]) => {
+        setPage(_page)
+        ItemsService.getAllItems(_limit, _page, filters).then(res => {
+            if(_page === 0) {
+                setItems(res.data)
+            }else{
+                setItems(prev => [...prev, ...res.data])
+            }
+            const totalCount = parseInt(res.headers['x-total-count']) - 1
+            setTotalPages(getPagesCount(totalCount, _limit))
+        })
+        CategoryService.getByGCategory(filters.globCat).then(res => setCategories(res.data))
     })
 
+    useObserver(
+        lastElement,
+        page < totalPages,
+        isItemsLoading || items.length === 0,
+        () => fetchItems(limit, page + 1, items)
+        )
 
     const fetchProperties = async () => {
         const col = await ColorsService.getAll()
         setColors(col.data)
         const collect = await CollectionsService.getAll()
         setCollections(collect.data)
-        const cats = await CategoryService.getAll()
-        setCategories(cats.data)
     }
 
     useEffect(()=>{
@@ -71,14 +78,9 @@ const SearchPage:FC = () => {
     },[])
 
     useEffect(()=>{
-        setPage(0)
+        setItems([])
         fetchItems(limit, 0)
     },[filters])
-
-    useObserver(lastElement, page < totalPages, isItemsLoading,()=>{
-        setPage(page + 1)
-        fetchItems(limit, page + 1)
-    })
 
     return (
         <div className={classes.search}>
@@ -129,17 +131,16 @@ const SearchPage:FC = () => {
                 <CardList products={items}/>
             </div>
             {isItemsLoading
-                ?<div className={classes.loader}>
+                ? <div className={classes.loader}>
                     <Loader/>
                 </div>
-                :<div ref={lastElement} className={classes.loader}/>
+                : items.length == 0
+                    ? (<div className={classes.items_empty}>
+                        <h2>Sorry, we don't have this product yet</h2>
+                       </div>)
+                    : null
             }
-            {(!isItemsLoading && items.length == 0)?
-                <div className={classes.items_empty}>
-                    <h2>Sorry, we don't have this product yet</h2>
-                </div>
-                :null
-            }
+            <div ref={lastElement} className={classes.loader}/>
         </div>
     );
 };
