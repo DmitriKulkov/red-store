@@ -1,4 +1,20 @@
-# Getting Started with Create React App
+# Redstore front-end repository
+
+Front-end repository for online clothing store pet project.
+
+Back-end repository: https://github.com/DmitriKulkov/back-store
+
+Deploy: http://red-store-seven.vercel.app/
+
+Used technologies:
+- React
+- Redux
+- Typescript
+
+Home page, Search page with filters and endless scroll, Item page and Cart page has been implemented.
+
+Site was made up with use of responsive desine for better mobile and desctop display.
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
