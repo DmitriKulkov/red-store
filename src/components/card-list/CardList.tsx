@@ -8,7 +8,14 @@ interface CardListProps{
     products: Product[]
 }
 
-const CardList:FC<CardListProps> = ({products}, ) => {
+const CardList:FC<CardListProps> = ({products}) => {
+    if (products.length == 0) {
+        return (
+            <div>
+                <h2>Sorry, we don't have this product yet</h2>
+            </div>
+        )
+    } else
     return (
         <div className={classes.cardList}>
             {products.map((product)=>

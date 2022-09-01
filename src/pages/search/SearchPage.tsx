@@ -47,18 +47,17 @@ const SearchPage:FC = () => {
 
     const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (_limit: number, _page: number, _items: Product[]) => {
         setPage(_page)
-        ItemsService.getAllItems(_limit, _page, filters).then(res => {
-            if(_page === 0) {
+        await Promise.all([ItemsService.getAllItems(_limit, _page, filters).then(res => {
+            if (_page === 0) {
                 setItems(res.data)
-            }else{
+            } else {
                 setItems(prev => [...prev, ...res.data])
             }
             const totalCount = parseInt(res.headers['x-total-count']) - 1
             setTotalPages(getPagesCount(totalCount, _limit))
-        })
-        CategoryService.getByGCategory(filters.globCat).then(res => setCategories(res.data))
+        }),
+            CategoryService.getByGCategory(filters.globCat).then(res => setCategories(res.data))])
     })
-
     useObserver(
         lastElement,
         page < totalPages,
@@ -78,7 +77,6 @@ const SearchPage:FC = () => {
     },[])
 
     useEffect(()=>{
-        setItems([])
         fetchItems(limit, 0)
     },[filters])
 
@@ -127,18 +125,13 @@ const SearchPage:FC = () => {
                     </div>
                 </div>
             </div>
-            <div className={classes.collection}>
-                <CardList products={items}/>
-            </div>
             {isItemsLoading
                 ? <div className={classes.loader}>
                     <Loader/>
                 </div>
-                : items.length == 0
-                    ? (<div className={classes.items_empty}>
-                        <h2>Sorry, we don't have this product yet</h2>
-                       </div>)
-                    : null
+                : (<div className={classes.collection}>
+                    <CardList products={items}/>
+                </div>)
             }
             <div ref={lastElement} className={classes.loader}/>
         </div>
