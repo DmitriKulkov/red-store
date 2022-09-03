@@ -27,7 +27,7 @@ import FilterTab from "../../components/tab/Tab";
 
 
 const SearchPage:FC = () => {
-    const limit = 8
+    const limit = 1
 
     const filters = useTypedSelector(state => state.filters)
     const title = useTypedSelector(state => state.title)
@@ -47,22 +47,25 @@ const SearchPage:FC = () => {
 
     const {fetching: fetchItems, isLoading: isItemsLoading, error: itemsError} = useFetching(async (_limit: number, _page: number, _items: Product[]) => {
         setPage(_page)
-        ItemsService.getAllItems(_limit, _page, filters).then(res => {
-            if(_page === 0) {
-                setItems(res.data)
-            }else{
-                setItems(prev => [...prev, ...res.data])
-            }
-            const totalCount = parseInt(res.headers['x-total-count']) - 1
-            setTotalPages(getPagesCount(totalCount, _limit))
-        })
-        CategoryService.getByGCategory(filters.globCat).then(res => setCategories(res.data))
+        const res = await ItemsService.getAllItems(_limit, _page, filters)
+        if(_page === 0) {
+            setItems(res.data)
+        }else{
+            setItems(prev => [...prev, ...res.data])
+        }
+        const totalCount = parseInt(res.headers['x-total-count']) - 1
+        setTotalPages(getPagesCount(totalCount, _limit))
     })
+
+    const fetchCategories = async () => {
+        const res = await CategoryService.getByGCategory(filters.globCat)
+        setCategories(res.data)
+    }
 
     useObserver(
         lastElement,
-        page < totalPages,
-        isItemsLoading || items.length === 0,
+        (page < totalPages)&&(items.length > 0),
+        isItemsLoading,
         () => fetchItems(limit, page + 1, items)
         )
 
@@ -78,8 +81,8 @@ const SearchPage:FC = () => {
     },[])
 
     useEffect(()=>{
-        setItems([])
         fetchItems(limit, 0)
+        fetchCategories()
     },[filters])
 
     return (
