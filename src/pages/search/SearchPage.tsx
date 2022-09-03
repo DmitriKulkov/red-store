@@ -130,13 +130,14 @@ const SearchPage:FC = () => {
                     </div>
                 </div>
             </div>
+            <div className={classes.collection}>
+                <CardList products={items}/>
+            </div>
             {isItemsLoading
                 ? <div className={classes.loader}>
                     <Loader/>
                 </div>
-                : (<div className={classes.collection}>
-                    <CardList products={items}/>
-                </div>)
+                : null
             }
             <div ref={lastElement} className={classes.loader}/>
         </div>
