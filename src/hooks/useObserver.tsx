@@ -9,7 +9,7 @@ export const useObserver = (
 ) => {
     const observer = useRef<IntersectionObserver>()
     useEffect(() => {
-        if (isLoading) return;
+        if (isLoading || !ref.current) return;
         if (observer.current) {
             observer.current.disconnect();
         }

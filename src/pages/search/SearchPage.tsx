@@ -27,7 +27,7 @@ import FilterTab from "../../components/tab/Tab";
 
 
 const SearchPage:FC = () => {
-    const limit = 1
+    const limit = 8
 
     const filters = useTypedSelector(state => state.filters)
     const title = useTypedSelector(state => state.title)
@@ -137,9 +137,12 @@ const SearchPage:FC = () => {
                 ? <div className={classes.loader}>
                     <Loader/>
                 </div>
-                : null
+                :  items.length == 0
+                    ? (<div className={classes.items_empty}>
+                        <h2>Sorry, we don't have this product yet</h2>
+                        </div>)
+                    : <div ref={lastElement} className={classes.loader}/>
             }
-            <div ref={lastElement} className={classes.loader}/>
         </div>
     );
 };

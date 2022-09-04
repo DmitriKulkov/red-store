@@ -12,7 +12,7 @@ const Card:FC<CardProps> = ({ item}) => {
     return (
         <div className={classes.card}>
             <Link to={'/product/' + item.model.slug} className={classes.link}>
-                <img src={item.files[0].encoded_img} alt="item"/>
+                <img src={item.files[0].encoded_img}/>
                 <div>
                     <p>{item.model.name}</p>
                     <p>{item.price}</p>
