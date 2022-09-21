@@ -1,12 +1,15 @@
+import { Clear } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import React, { FC } from "react";
 import { CartState } from "../../../store/reducers/cartRedusers";
 import classes from "./CartShortList.module.css";
 
 interface CartShortListProps {
   cart: CartState;
+  remove: (id: number) => void;
 }
 
-const CartShortList: FC<CartShortListProps> = ({ cart }) => {
+const CartShortList: FC<CartShortListProps> = ({ cart, remove }) => {
   return (
     <div className={classes.cart_short_list}>
       {cart.items.map((item) => (
@@ -15,6 +18,16 @@ const CartShortList: FC<CartShortListProps> = ({ cart }) => {
           <p className={classes.cart_short_list__card__price}>
             {item.product.price}
           </p>
+          <div>
+            <IconButton
+              aria-label="delete"
+              onClick={() => {
+                remove(item.id);
+              }}
+            >
+              <Clear />
+            </IconButton>
+          </div>
         </div>
       ))}
     </div>

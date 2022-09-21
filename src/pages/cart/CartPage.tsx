@@ -25,7 +25,7 @@ const CartPage = () => {
           </div>
           <div className={classes.cart_list}>
             <h2>Items: </h2>
-            <CartShortList cart={cart} />
+            <CartShortList cart={cart} remove={removeItem} />
             <div className={classes.cart_list__total_price}>
               <h3>Total: </h3>
               <h3>
