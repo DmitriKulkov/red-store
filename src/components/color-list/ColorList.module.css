@@ -1,16 +1,16 @@
-.container{
-    display: flex;
-    flex-direction: row;
+.container {
+  display: flex;
+  flex-direction: row;
 }
 
-.color{
-    height: 20px;
-    width: 20px;
-    border-radius: 20px;
-    border: 1px solid black;
-    margin: 2px;
+.color {
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  border: 1px solid black;
+  margin: 2px;
 }
 
-.color__selected{
-    border: 2px solid teal;
+.color__selected {
+  border: 2px solid teal;
 }

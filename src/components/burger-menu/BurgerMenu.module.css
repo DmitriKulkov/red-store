@@ -1,63 +1,62 @@
-.menu__button{
-    position: absolute;
-    top: 17px;
-    left: 10px;
+.menu__button {
+  position: absolute;
+  top: 17px;
+  left: 10px;
 }
 
-.menu__window{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    width: 80vw;
-    height: 100vh;
-    background: white;
-    display: flex;
-    flex-direction: column;
+.menu__window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 80vw;
+  height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
 }
 
-.menu__window__header{
-    height: 95px;
-    width: 100%;
-    border: 1px solid #686868;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.menu__window__header {
+  height: 95px;
+  width: 100%;
+  border: 1px solid #686868;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.menu__window__header > h2{
-    color: #686868;
-
+.menu__window__header > h2 {
+  color: #686868;
 }
 
-.menu__window__header__close{
-    display: block;
-    position: absolute;
-    top: 17px;
-    left: 10px;
+.menu__window__header__close {
+  display: block;
+  position: absolute;
+  top: 17px;
+  left: 10px;
 }
 
-.menu__window__header__cart{
-    display: block;
-    position: absolute;
-    top: 25px;
-    right: 10px;
+.menu__window__header__cart {
+  display: block;
+  position: absolute;
+  top: 25px;
+  right: 10px;
 }
 
-.menu__window__content{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px;
+.menu__window__content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
 }
 
-.menu__blur{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    opacity: 0.5;
-    z-index: 1;
+.menu__blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  opacity: 0.5;
+  z-index: 1;
 }

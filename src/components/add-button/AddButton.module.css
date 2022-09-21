@@ -1,9 +1,9 @@
-.AddButton{
-    background: #FFABAB;
-    color: white;
-    border: none;
-    outline: none;
-    font-size: 20px;
-    height: 100%;
-    width: 100%;
+.AddButton {
+  background: #ffabab;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  height: 100%;
+  width: 100%;
 }

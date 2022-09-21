@@ -1,14 +1,14 @@
-.filters__menu{
-    position: absolute;
-    left: 10px;
-    top: 12px;
+.filters__menu {
+  position: absolute;
+  left: 10px;
+  top: 12px;
 }
 
-.filters__menu__window{
-    width: 100vw;
-    position: absolute;
-    top: 74px;
-    left: -10px;
-    z-index: 0;
-    background: white;
+.filters__menu__window {
+  width: 100vw;
+  position: absolute;
+  top: 74px;
+  left: -10px;
+  z-index: 0;
+  background: white;
 }

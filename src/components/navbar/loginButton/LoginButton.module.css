@@ -1,8 +1,8 @@
-.login{
-    width: 4vw;
-    height: 20px;
-    margin: 0 0.5vw 0 0.5vw;
-    background: white;
-    border: 1px solid black;
-    border-radius: 16px;
+.login {
+  width: 4vw;
+  height: 20px;
+  margin: 0 0.5vw 0 0.5vw;
+  background: white;
+  border: 1px solid black;
+  border-radius: 16px;
 }

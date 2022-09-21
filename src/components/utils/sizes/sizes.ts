@@ -1,5 +1,5 @@
-export enum Sizes{
-    S = "S",
-    M = "M",
-    L = "L"
+export enum Sizes {
+  S = "S",
+  M = "M",
+  L = "L",
 }

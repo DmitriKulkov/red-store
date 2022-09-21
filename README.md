@@ -7,6 +7,7 @@ Back-end repository: https://github.com/DmitriKulkov/back-store
 Deploy: http://red-store-seven.vercel.app/
 
 Used technologies:
+
 - React
 - Redux
 - Typescript
@@ -14,7 +15,6 @@ Used technologies:
 Home page, Search page with filters and endless scroll, Item page and Cart page has been implemented.
 
 Site was made up with use of responsive desine for better mobile and desctop display.
-
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
