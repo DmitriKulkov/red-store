@@ -1,0 +1,7 @@
+.collection_link{
+  cursor: pointer;
+}
+
+.collection_link:hover{
+  text-decoration: underline;
+}

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Collection } from "../../../../entities/collection.entity";
 import { useActions } from "../../../../hooks/useActions";
+import classes from './CollectionFilter.module.css'
 
 interface CollectionFilterProps {
   collections: Collection[];
@@ -14,7 +15,7 @@ const CollectionFilter: FC<CollectionFilterProps> = ({ collections }) => {
       {collections.map((col) => (
         <div
           key={col.id}
-          style={{ cursor: "pointer" }}
+          className={classes.collection_link}
           onClick={() => {
             changeCollection(col.slug);
             changeTitle(col.name);

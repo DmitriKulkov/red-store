@@ -1,6 +1,6 @@
+import React, { FC } from "react";
 import { Clear } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import React, { FC } from "react";
 import { CartState } from "../../../store/reducers/cartRedusers";
 import classes from "./CartShortList.module.css";
 

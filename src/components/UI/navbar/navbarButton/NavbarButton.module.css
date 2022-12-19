@@ -8,6 +8,7 @@
   border-top: white;
   font-size: 18px;
   display: inline-block;
+  cursor: pointer;
 }
 .link {
   text-decoration: none;

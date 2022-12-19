@@ -19,10 +19,12 @@
 .menu__window__header {
   height: 95px;
   width: 100%;
-  border: 1px solid #686868;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #961919;
+  color: white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .menu__window__header > h2 {
@@ -46,8 +48,6 @@
 .menu__window__content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 20px;
 }
 
 .menu__blur {
@@ -59,4 +59,14 @@
   background: black;
   opacity: 0.5;
   z-index: 1;
+}
+
+.option {
+  border-bottom: 1px solid lightgray;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
 }

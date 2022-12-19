@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import Card from "../card/Card";
 import { Product } from "../../entities/product.entity";
 import classes from "./CardList.module.css";
-import { Transition, TransitionGroup } from "react-transition-group";
 
 interface CardListProps {
   products: Product[];

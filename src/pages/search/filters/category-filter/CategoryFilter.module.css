@@ -1,0 +1,7 @@
+.category_link{
+  cursor: pointer;
+}
+
+.category_link:hover{
+  text-decoration: underline;
+}

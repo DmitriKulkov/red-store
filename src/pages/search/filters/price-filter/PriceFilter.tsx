@@ -6,9 +6,11 @@ import { useActions } from "../../../../hooks/useActions";
 import { useTypedSelector } from "../../../../hooks/useTypedSelector";
 
 const PriceFilter: FC = () => {
+  const filters = useTypedSelector((state) => state.filters);
+
   const [diapason, setDiapason] = useState<{ a: string; b: string }>({
-    a: "0",
-    b: "10000",
+    a: filters.priceDiapason.a + '',
+    b: filters.priceDiapason.b + '',
   });
 
   const debouncedPriceA = useDebouncedCallback(
@@ -23,8 +25,6 @@ const PriceFilter: FC = () => {
     },
     1000
   );
-
-  const filters = useTypedSelector((state) => state.filters);
 
   const { changePriceDiapason, changeSortPrice } = useActions();
 

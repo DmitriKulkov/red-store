@@ -107,6 +107,7 @@ const SearchPage: FC = () => {
             <label className={classes.filters__label}>{title.title}</label>
             <IconButton
               aria-label="delete"
+              title="Clear filters"
               onClick={() => {
                 removeFilters();
                 resetTitle();

@@ -45,7 +45,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ className }) => {
                 setMenuOpened(false);
               }}
             >
-              <ArrowBackIos sx={{ fontSize: "45px", color: "lightgrey" }} />
+              <ArrowBackIos sx={{ fontSize: "45px", color: "white" }} />
             </IconButton>
           </div>
           <div className={classes.menu__window__header__cart}>
@@ -57,7 +57,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ className }) => {
               }}
             >
               <ShoppingCartOutlined
-                sx={{ fontSize: "30px", color: "#686868" }}
+                sx={{ fontSize: "30px", color: "white" }}
               />
             </IconButton>
           </div>
@@ -70,7 +70,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ className }) => {
               changeTitle("New");
             }}
           >
-            <p>New!</p>
+            <div className={classes.option}>New!</div>
           </Link>
           <Link
             to={"/search"}
@@ -80,7 +80,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ className }) => {
               changeTitle("Clothes");
             }}
           >
-            <p>Clothes</p>
+            <div className={classes.option}>Clothes</div>
           </Link>
           <Link
             to={"/search"}
@@ -90,7 +90,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ className }) => {
               changeTitle("Shoes");
             }}
           >
-            <p>Shoes</p>
+            <div className={classes.option}>Shoes</div>
           </Link>
           <Link
             to={"/search"}
@@ -100,7 +100,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({ className }) => {
               changeTitle("Accessories");
             }}
           >
-            <p>Accessories</p>
+            <div className={classes.option}>Accessories</div>
           </Link>
         </div>
       </div>
