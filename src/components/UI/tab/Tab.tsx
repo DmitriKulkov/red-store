@@ -4,6 +4,7 @@ import classes from "./Tab.module.css";
 interface TabProps {
   header: string;
   className?: string;
+  children?: React.ReactNode
 }
 
 const Tab: FC<TabProps> = ({ header, className, children }) => {

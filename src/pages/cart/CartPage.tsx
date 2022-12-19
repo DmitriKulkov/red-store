@@ -1,11 +1,9 @@
 import React from "react";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import classes from "./CartPage.module.css";
-import CartCard from "../../components/cart-card/CartCard";
 import CartCardList from "../../components/cart-lists/cart-card-list/CartCardList";
 import CartShortList from "../../components/cart-lists/cart-short-list/CartShortList";
-import AddButton from "../../components/add-button/AddButton";
-import InformationBar from "../../components/information-bar/InformationBar";
+import AddButton from "../../components/UI/add-button/AddButton";
 import { useActions } from "../../hooks/useActions";
 
 const CartPage = () => {

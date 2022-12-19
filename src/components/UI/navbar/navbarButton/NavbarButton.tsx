@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 interface NavbarButtonProps {
   link: string;
   onClick: MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
 }
 
 const NavbarButton: FC<NavbarButtonProps> = ({ link, children, onClick }) => {

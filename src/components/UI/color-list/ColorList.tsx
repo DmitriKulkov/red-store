@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Color } from "../../entities/color.entity";
+import { FC } from "react";
+import { Color } from "../../../entities/color.entity";
 import classes from "./ColorList.module.css";
 
 interface ColorListProps {

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import ColorList from "../../../../components/color-list/ColorList";
+import ColorList from "../../../../components/UI/color-list/ColorList";
 import { Color } from "../../../../entities/color.entity";
 import { useActions } from "../../../../hooks/useActions";
 

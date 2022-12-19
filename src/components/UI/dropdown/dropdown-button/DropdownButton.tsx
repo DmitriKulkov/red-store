@@ -5,6 +5,7 @@ interface FilterButtonProps {
   onClick?: MouseEventHandler;
   onMouseEnter?: MouseEventHandler;
   onMouseLeave?: MouseEventHandler;
+  children: React.ReactNode;
 }
 
 const DropdownButton: FC<FilterButtonProps> = ({

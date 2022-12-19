@@ -1,5 +1,4 @@
 import React, {
-  ChangeEvent,
   ChangeEventHandler,
   FormEventHandler,
   FC,

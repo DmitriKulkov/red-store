@@ -4,11 +4,13 @@ import DropdownButton from "./dropdown-button/DropdownButton";
 
 interface DropdownProps {
   header: string;
+  children: React.ReactNode;
 }
 
 const Dropdown: FC<DropdownProps> = ({ header, children }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-  let timer: NodeJS.Timeout;
+  let timer: ReturnType<typeof setTimeout>
+
   return (
     <div className={classes.dropdown}>
       <DropdownButton

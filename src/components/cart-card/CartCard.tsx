@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { CartItem } from "../../entities/cart-item.entity";
-import ColorList from "../color-list/ColorList";
+import ColorList from "../UI/color-list/ColorList";
 import classes from "./CartCard.module.css";
 import { Clear } from "@mui/icons-material";
 import { IconButton } from "@mui/material";

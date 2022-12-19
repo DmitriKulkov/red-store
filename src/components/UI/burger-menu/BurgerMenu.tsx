@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import classes from "./BurgerMenu.module.css";
 import { IconButton } from "@mui/material";
 import { ArrowBackIos, Menu, ShoppingCartOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
-import { useActions } from "../../hooks/useActions";
+import { useActions } from "../../../hooks/useActions";
 
 interface BurgerMenuProps {
   className?: string;
@@ -12,7 +12,7 @@ interface BurgerMenuProps {
 const BurgerMenu: FC<BurgerMenuProps> = ({ className }) => {
   const [menuOpened, setMenuOpened] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { changeName, changeTitle, changeGCategory } = useActions();
+  const { changeTitle, changeGCategory } = useActions();
 
   return (
     <div className={classes.menu__button + " " + className}>

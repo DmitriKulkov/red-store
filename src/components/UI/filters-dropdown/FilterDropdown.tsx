@@ -5,6 +5,7 @@ import { KeyboardArrowDown } from "@mui/icons-material";
 
 interface FilterDropdownProps {
   className?: string;
+  children?: React.ReactNode;
 }
 
 const FilterDropdown: FC<FilterDropdownProps> = ({ className, children }) => {

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import classes from "./Navbar.module.css";
 import NavbarButton from "./navbarButton/NavbarButton";
 import Search from "../search-bar/Search";
-import logo from "./logo.png";
+import logo from "./logo.webp";
 import { Link, useNavigate } from "react-router-dom";
-import { useActions } from "../../hooks/useActions";
-import { ShoppingCartOutlined, Menu, ArrowBackIos } from "@mui/icons-material";
+import { useActions } from "../../../hooks/useActions";
+import { ShoppingCartOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import BurgerMenu from "../burger-menu/BurgerMenu";
 

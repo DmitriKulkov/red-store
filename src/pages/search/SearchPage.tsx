@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import classes from "./SearchPage.module.css";
-import Dropdown from "../../components/dropdown/Dropdown";
+import Dropdown from "../../components/UI/dropdown/Dropdown";
 import CardList from "../../components/card-list/CardList";
 import { Product } from "../../entities/product.entity";
 import ItemsService from "../../API/ItemsService";
@@ -22,8 +22,8 @@ import PriceFilter from "./filters/price-filter/PriceFilter";
 import CategoryFilter from "./filters/category-filter/CategoryFilter";
 import ColorFilter from "./filters/color-filter/ColorFilter";
 import CollectionFilter from "./filters/collection-filter/CollectionFilter";
-import FilterDropdown from "../../components/filters-dropdown/FilterDropdown";
-import FilterTab from "../../components/tab/Tab";
+import FilterDropdown from "../../components/UI/filters-dropdown/FilterDropdown";
+import FilterTab from "../../components/UI/tab/Tab";
 
 const SearchPage: FC = () => {
   const limit = 8;
@@ -45,7 +45,6 @@ const SearchPage: FC = () => {
   const {
     fetching: fetchItems,
     isLoading: isItemsLoading,
-    error: itemsError,
   } = useFetching(async (_limit: number, _page: number, _items: Product[]) => {
     setPage(_page);
     const res = await ItemsService.getAllItems(_limit, _page, filters);
@@ -139,7 +138,7 @@ const SearchPage: FC = () => {
         <div className={classes.loader}>
           <Loader />
         </div>
-      ) : items.length == 0 ? (
+      ) : items.length === 0 ? (
         <div className={classes.items_empty}>
           <h2>Sorry, we don't have this product yet</h2>
         </div>

@@ -7,15 +7,13 @@ import { getPagesCount } from "../../components/utils/pages";
 import { initialState } from "../../store/reducers/filterReducers";
 import { Product } from "../../entities/product.entity";
 import Loader from "../../components/UI/loader/Loader";
-import ColorList from "../../components/color-list/ColorList";
+import ColorList from "../../components/UI/color-list/ColorList";
 import { Sizes } from "../../components/utils/sizes/sizes";
-import Select from "../../components/select/Select";
-import AddButton from "../../components/add-button/AddButton";
+import Select from "../../components/UI/select/Select";
+import AddButton from "../../components/UI/add-button/AddButton";
 import CardList from "../../components/card-list/CardList";
 import { Color } from "../../entities/color.entity";
 import { useActions } from "../../hooks/useActions";
-import { hrHR } from "@mui/material/locale";
-import InformationBar from "../../components/information-bar/InformationBar";
 
 const ItemPage: FC = () => {
   const limit = 8;
@@ -37,8 +35,6 @@ const ItemPage: FC = () => {
 
   const {
     fetching: fetchItems,
-    isLoading: isItemsLoading,
-    error: itemsError,
   } = useFetching(async () => {
     if (product) {
       const resItem = await ItemsService.getBySlug(product);
@@ -52,7 +48,7 @@ const ItemPage: FC = () => {
       setSameItems([]);
       setSameItems(
         resSame.data.filter(
-          (product) => product.model.slug != resItem.data.model.slug
+          (product) => product.model.slug !== resItem.data.model.slug
         )
       );
       setTotalPages(getPagesCount(totalCount, limit));

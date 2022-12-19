@@ -3,21 +3,17 @@ import classes from "./Home.module.css";
 import CardList from "../../components/card-list/CardList";
 import ItemsService from "../../API/ItemsService";
 import { Product } from "../../entities/product.entity";
-import InformationBar from "../../components/information-bar/InformationBar";
 import { useFetching } from "../../hooks/useFetching";
-import { getPagesCount } from "../../components/utils/pages";
 import Loader from "../../components/UI/loader/Loader";
 
 const Home: FC = () => {
   const limit = 8;
-  const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
   const [items, setItems] = useState<Product[]>([]);
 
   const {
     fetching: fetchItems,
     isLoading: isItemsLoading,
-    error: itemsError,
   } = useFetching(async (limit: number, page: number) => {
     const response = await ItemsService.getItemsByCollection(
       "summer-collection",
